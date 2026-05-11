@@ -239,9 +239,6 @@ function closeRecipe() {
 function initSearchAndSort() {
   const search = document.getElementById("recipeSearch");
   const sort = document.getElementById("recipeSort");
-  const count = document.getElementById("recipeCount");
-
-  if (count) count.textContent = RECIPES.length;
 
   if (search) {
     search.addEventListener("input", () => {
