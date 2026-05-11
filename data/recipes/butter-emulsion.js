@@ -16,16 +16,19 @@ window.RECIPES.push({
   ],
   baseServings: 4,
   calculator: {
-    type: 'ratio',
-    title: 'Butter-to-liquid ratio',
-    label: 'Butter : liquid',
-    min: 1,
-    max: 4,
-    value: 2,
-    liquidAmount: 60,
-    liquidUnit: 'ml',
-    butterUnit: 'g',
-    note: 'The base is 2:1 by weight/volume: 120 g butter to 60 ml liquid. Move the slider for a lighter or richer sauce.'
+    type: 'yieldRatio',
+    title: 'Sauce size scaler',
+    label: 'Target sauce',
+    min: 50,
+    max: 300,
+    step: 25,
+    value: 100,
+    unit: 'ml sauce',
+    butterParts: 5,
+    waterParts: 2,
+    firstButterShare: 0.75,
+    roundTo: 0.5,
+    note: 'The emulsion uses a fixed 5:2 ratio of butter to water. Three quarters of the butter starts the emulsion; the final quarter is whisked in as the second batch.'
   },
   relatedRecipes: [
     {
@@ -39,21 +42,27 @@ window.RECIPES.push({
   },
   feature: {
     type: 'technique',
-    title: 'Emulsion cue',
-    text: 'If the sauce looks greasy, take it off the heat and whisk in a small splash of hot water before adding more butter.'
+    title: '5:2 butter emulsion',
+    text: 'Keep the total ratio at 5 parts butter to 2 parts water. Separate three quarters of the butter for the first batch and the remaining quarter for the second batch.'
   },
   ingredients: [
     {
-      amount: 60,
+      amount: 28.5,
       unit: 'ml',
       item: 'water or light vegetable stock',
-      role: 'ratioLiquid'
+      role: 'yieldWater'
     },
     {
-      amount: 120,
+      amount: 53.5,
       unit: 'g',
-      item: 'cold butter, cubed',
-      role: 'ratioButter'
+      item: 'cold butter, cubed, first batch',
+      role: 'yieldButterFirst'
+    },
+    {
+      amount: 18,
+      unit: 'g',
+      item: 'cold butter, cubed, second batch',
+      role: 'yieldButterSecond'
     },
     {
       amount: 0.5,
@@ -67,8 +76,10 @@ window.RECIPES.push({
     }
   ],
   steps: [
+    'Weigh the butter, then separate three quarters for the first batch and the remaining quarter for the second batch.',
     'Bring the water or stock to a simmer in a small pan, then lower the heat.',
-    'Whisk in the cold butter a few cubes at a time, letting each addition melt into the sauce before adding more.',
+    'Whisk in the first batch of cold butter a few cubes at a time, letting each addition melt into the sauce before adding more.',
+    'Whisk in the second batch of butter at the end to finish and tighten the emulsion.',
     'Season with lemon juice or vinegar and salt, then keep warm over very low heat and serve immediately.'
   ]
 });

@@ -100,6 +100,7 @@ Existing calculator types:
 - `servings`: scales ingredients by serving count.
 - `pan`: scales ingredients by pan diameter.
 - `ratio`: keeps one ingredient fixed and adjusts another by ratio, used by butter emulsion.
+- `yieldRatio`: scales a fixed-ratio formula to a target yield, used by butter emulsion.
 
 If adding a new tool type, update `recipe-page.js` narrowly and keep the data shape readable in the individual recipe file.
 

@@ -14,6 +14,8 @@ window.RECIPE_FILES = [
 ];
 
 (function loadRecipeFiles() {
+  if (typeof document === "undefined") return;
+
   const currentScript = document.currentScript;
   if (!currentScript || !currentScript.src) return;
 

@@ -41,6 +41,15 @@ function getRatioIngredient(ingredient, ratioState) {
   if (ingredient.role === "ratioButter") {
     return { ...ingredient, amount: ratioState.liquidAmount * ratioState.ratio, unit: ratioState.butterUnit };
   }
+  if (ingredient.role === "yieldWater") {
+    return { ...ingredient, amount: ratioState.waterAmount, unit: "ml" };
+  }
+  if (ingredient.role === "yieldButterFirst") {
+    return { ...ingredient, amount: ratioState.firstButterAmount, unit: "g" };
+  }
+  if (ingredient.role === "yieldButterSecond") {
+    return { ...ingredient, amount: ratioState.secondButterAmount, unit: "g" };
+  }
   return ingredient;
 }
 
@@ -53,6 +62,7 @@ function getInitialTarget(recipe) {
   if (!recipe.calculator) return recipe.baseServings || 1;
   if (recipe.calculator.type === "pan") return recipe.calculator.basePan;
   if (recipe.calculator.type === "ratio") return recipe.calculator.value;
+  if (recipe.calculator.type === "yieldRatio") return recipe.calculator.value;
   return recipe.baseServings || recipe.calculator.min || 1;
 }
 
@@ -66,6 +76,37 @@ function getScale(recipe, target) {
     return Math.pow(target / recipe.calculator.basePan, 2);
   }
   return target / recipe.baseServings;
+}
+
+function roundTo(value, interval = 1) {
+  return Math.round(value / interval) * interval;
+}
+
+function getCalculatorIngredientState(recipe, target = getInitialTarget(recipe)) {
+  if (!recipe.calculator) return null;
+  if (recipe.calculator.type === "ratio") {
+    return {
+      ratio: target,
+      liquidAmount: recipe.calculator.liquidAmount,
+      liquidUnit: recipe.calculator.liquidUnit,
+      butterUnit: recipe.calculator.butterUnit
+    };
+  }
+  if (recipe.calculator.type === "yieldRatio") {
+    const totalParts = recipe.calculator.butterParts + recipe.calculator.waterParts;
+    const waterAmount = target * recipe.calculator.waterParts / totalParts;
+    const butterAmount = target * recipe.calculator.butterParts / totalParts;
+    const firstButterAmount = butterAmount * recipe.calculator.firstButterShare;
+    const secondButterAmount = butterAmount - firstButterAmount;
+    const roundInterval = recipe.calculator.roundTo || 1;
+
+    return {
+      waterAmount: roundTo(waterAmount, roundInterval),
+      firstButterAmount: roundTo(firstButterAmount, roundInterval),
+      secondButterAmount: roundTo(secondButterAmount, roundInterval)
+    };
+  }
+  return null;
 }
 
 function renderIngredientList(recipe, scale = 1, ratioState = null) {
@@ -147,9 +188,8 @@ function renderCalculator(recipe) {
   if (recipe.calculator) {
     const target = getInitialTarget(recipe);
     const unit = recipe.calculator.unit ? ` ${recipe.calculator.unit}` : "";
-    const value = recipe.calculator.type === "ratio"
-      ? `${formatRatio(target)}:1`
-      : `${target}${unit}`;
+    const value = recipe.calculator.type === "ratio" ? `${formatRatio(target)}:1` : `${target}${unit}`;
+    const step = recipe.calculator.step || (recipe.calculator.type === "ratio" ? ".5" : "1");
     blocks.push(`
       <section class="recipe-tool">
         <span class="tool-kicker">Calculator</span>
@@ -164,7 +204,7 @@ function renderCalculator(recipe) {
           min="${recipe.calculator.min}"
           max="${recipe.calculator.max}"
           value="${target}"
-          step="${recipe.calculator.type === "ratio" ? ".5" : "1"}"
+          step="${step}"
         />
         <p>${recipe.calculator.note}</p>
       </section>
@@ -183,12 +223,10 @@ function renderCalculator(recipe) {
     const target = Number(slider.value);
     if (recipe.calculator.type === "ratio") {
       value.textContent = `${formatRatio(target)}:1`;
-      renderIngredientList(recipe, 1, {
-        ratio: target,
-        liquidAmount: recipe.calculator.liquidAmount,
-        liquidUnit: recipe.calculator.liquidUnit,
-        butterUnit: recipe.calculator.butterUnit
-      });
+      renderIngredientList(recipe, 1, getCalculatorIngredientState(recipe, target));
+    } else if (recipe.calculator.type === "yieldRatio") {
+      value.textContent = `${target}${unit}`;
+      renderIngredientList(recipe, 1, getCalculatorIngredientState(recipe, target));
     } else {
       value.textContent = `${target}${unit}`;
       renderIngredientList(recipe, getScale(recipe, target));
@@ -257,7 +295,7 @@ function renderRecipePage() {
     </section>
   `;
 
-  renderIngredientList(recipe);
+  renderIngredientList(recipe, 1, getCalculatorIngredientState(recipe));
   renderTopInfo(recipe);
   renderCalculator(recipe);
 }
