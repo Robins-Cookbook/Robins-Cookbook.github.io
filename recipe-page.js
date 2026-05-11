@@ -44,6 +44,9 @@ function getRatioIngredient(ingredient, ratioState) {
   if (ingredient.role === "yieldWater") {
     return { ...ingredient, amount: ratioState.waterAmount, unit: "ml" };
   }
+  if (ingredient.role === "yieldButterTotal") {
+    return { ...ingredient, amount: ratioState.butterAmount, unit: "g" };
+  }
   if (ingredient.role === "yieldButterFirst") {
     return { ...ingredient, amount: ratioState.firstButterAmount, unit: "g" };
   }
@@ -102,6 +105,7 @@ function getCalculatorIngredientState(recipe, target = getInitialTarget(recipe))
 
     return {
       waterAmount: roundTo(waterAmount, roundInterval),
+      butterAmount: roundTo(butterAmount, roundInterval),
       firstButterAmount: roundTo(firstButterAmount, roundInterval),
       secondButterAmount: roundTo(secondButterAmount, roundInterval)
     };

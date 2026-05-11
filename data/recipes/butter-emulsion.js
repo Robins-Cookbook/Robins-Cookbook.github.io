@@ -53,6 +53,12 @@ window.RECIPES.push({
       role: 'yieldWater'
     },
     {
+      amount: 71.5,
+      unit: 'g',
+      item: 'cold butter, cubed, total',
+      role: 'yieldButterTotal'
+    },
+    {
       amount: 53.5,
       unit: 'g',
       item: 'cold butter, cubed, first batch',
@@ -65,11 +71,6 @@ window.RECIPES.push({
       role: 'yieldButterSecond'
     },
     {
-      amount: 0.5,
-      unit: 'tsp',
-      item: 'lemon juice or vinegar'
-    },
-    {
       amount: 1,
       unit: 'pinch',
       item: 'salt'
@@ -80,6 +81,6 @@ window.RECIPES.push({
     'Bring the water or stock to a simmer in a small pan, then lower the heat.',
     'Whisk in the first batch of cold butter a few cubes at a time, letting each addition melt into the sauce before adding more.',
     'Whisk in the second batch of butter at the end to finish and tighten the emulsion.',
-    'Season with lemon juice or vinegar and salt, then keep warm over very low heat and serve immediately.'
+    'Season with salt, then keep warm over very low heat and serve immediately.'
   ]
 });
