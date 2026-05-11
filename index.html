@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robin's Vegan Cookbook</title>
+  <meta name="description" content="Robin's personal vegan cookbook: weeknight recipes, seasonal favorites, pantry notes, and reliable plant-based meals." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://schrammr.github.io/RobinsVeganCookbook.github.io/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Robin's Vegan Cookbook" />
+  <meta property="og:description" content="A personal vegan cookbook for everyday meals, comfort food, and seasonal cooking." />
+  <meta property="og:url" content="https://schrammr.github.io/RobinsVeganCookbook.github.io/" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Robin's Vegan Cookbook" />
+  <meta name="twitter:description" content="A personal vegan cookbook for everyday meals, comfort food, and seasonal cooking." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=80" />
+
+  <link rel="icon" type="image/svg+xml" href="Assets/cookbook-favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+    rel="stylesheet"
+  />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Robin's Vegan Cookbook",
+      "url": "https://schrammr.github.io/RobinsVeganCookbook.github.io/",
+      "description": "A personal vegan cookbook for everyday meals, comfort food, and seasonal cooking."
+    }
+  </script>
+</head>
+<body>
+  <header id="site-header">
+    <nav class="nav-container" aria-label="Main navigation">
+      <a href="#hero" class="nav-logo">Robin's Vegan Cookbook</a>
+      <ul class="nav-links" id="siteNavLinks">
+        <li><a href="#recipes">Recipes</a></li>
+        <li><a href="#seasonal">Seasonal</a></li>
+        <li><a href="#pantry">Pantry</a></li>
+        <li><a href="#notes">Notes</a></li>
+      </ul>
+      <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-controls="siteNavLinks" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero" class="hero-section">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="hero-kicker">Plant-based, personal, practical</p>
+          <h1>Robin's Vegan Cookbook</h1>
+          <p class="hero-profile">
+            Favorite meals for busy weeks, slow weekends, and the small rituals that make a kitchen feel like home.
+          </p>
+          <form class="hero-search" role="search" aria-label="Search recipes">
+            <label for="recipeSearch">Find a recipe</label>
+            <div class="search-row">
+              <input id="recipeSearch" type="search" placeholder="Search lentils, tofu, pasta..." autocomplete="off" />
+              <a class="btn btn-primary" href="#recipes">Browse</a>
+            </div>
+          </form>
+          <dl class="hero-stats" aria-label="Cookbook overview">
+            <div>
+              <dt id="recipeCount">0</dt>
+              <dd>recipes</dd>
+            </div>
+            <div>
+              <dt>100%</dt>
+              <dd>vegan</dd>
+            </div>
+            <div>
+              <dt>33</dt>
+              <dd>min average</dd>
+            </div>
+          </dl>
+        </div>
+        <article class="hero-feature">
+          <img
+            src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1100&q=80"
+            alt="Colorful vegan bowl with vegetables and grains"
+          />
+          <div class="hero-feature-caption">
+            <span>Featured</span>
+            <h2>Roasted Vegetable Grain Bowls</h2>
+            <p>Lemon tahini, crisp chickpeas, and whatever vegetables are at their best.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="recipes" class="recipes-section">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <h2 class="section-title">Recipes</h2>
+            <p class="section-subtitle">Weeknight staples, weekend projects, and sweet things worth repeating.</p>
+          </div>
+          <label class="sort-control" for="recipeSort">
+            <span>Sort</span>
+            <select id="recipeSort" aria-label="Sort recipes">
+              <option value="favorite">Favorites first</option>
+              <option value="time">Fastest first</option>
+              <option value="name">A-Z</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="filter-bar" id="categoryFilters" aria-label="Filter recipes by category"></div>
+        <div class="recipe-grid" id="recipeGrid"></div>
+      </div>
+    </section>
+
+    <section id="seasonal" class="seasonal-section">
+      <div class="section-inner seasonal-grid">
+        <div>
+          <h2 class="section-title">This Week's Table</h2>
+          <p class="section-subtitle">A simple rotation for cooking once and eating well for several days.</p>
+          <div class="menu-board">
+            <article>
+              <span>Monday</span>
+              <h3>Ginger Miso Noodles</h3>
+              <p>Double the dressing and keep extra cucumber ready for lunch bowls.</p>
+            </article>
+            <article>
+              <span>Wednesday</span>
+              <h3>Smoky Bean Chili</h3>
+              <p>Serve with avocado, lime, and warm tortillas.</p>
+            </article>
+            <article>
+              <span>Weekend</span>
+              <h3>Almond Berry Cake</h3>
+              <p>Good with coffee, better after a long walk.</p>
+            </article>
+          </div>
+        </div>
+        <aside class="seasonal-card">
+          <img
+            src="https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=900&q=80"
+            alt="Fresh seasonal vegetables on a kitchen surface"
+          />
+          <div>
+            <span class="eyebrow">In Season</span>
+            <h3>Spring vegetables, herbs, lemon, peas</h3>
+            <p>Lean bright: green sauces, crisp textures, quick broths, and warm grains.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="pantry" class="pantry-section">
+      <div class="section-inner">
+        <h2 class="section-title">Pantry Notes</h2>
+        <p class="section-subtitle">The quiet ingredients that make fast vegan cooking feel less improvised.</p>
+        <div class="pantry-grid">
+          <article>
+            <span class="pantry-index">01</span>
+            <h3>Tahini</h3>
+            <p>Whisk with lemon, garlic, water, and salt for bowls, roasted vegetables, or sandwiches.</p>
+          </article>
+          <article>
+            <span class="pantry-index">02</span>
+            <h3>Miso</h3>
+            <p>Add at the end of soups, sauces, and noodles for depth without long simmering.</p>
+          </article>
+          <article>
+            <span class="pantry-index">03</span>
+            <h3>Smoked Paprika</h3>
+            <p>A small spoonful makes beans, potatoes, and tofu taste slow-cooked.</p>
+          </article>
+          <article>
+            <span class="pantry-index">04</span>
+            <h3>Good Vinegar</h3>
+            <p>Use it to wake up stews, balance creamy sauces, and sharpen salads.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="notes" class="notes-section">
+      <div class="section-inner notes-inner">
+        <div>
+          <h2 class="section-title">Kitchen Notes</h2>
+          <p class="notes-text">
+            This cookbook is a living collection: recipes get edited, simplified, and re-seasoned as they become part of everyday life.
+          </p>
+        </div>
+        <a class="btn btn-secondary" href="mailto:robinschramm@gmx.de">Send a recipe idea</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="footerYear"></span> Robin's Vegan Cookbook.</p>
+  </footer>
+
+  <div class="recipe-modal" id="recipeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <article class="modal-card">
+      <button class="modal-close" type="button" aria-label="Close recipe" data-close-modal>×</button>
+      <img id="modalImage" alt="" />
+      <div class="modal-body">
+        <div class="modal-meta" id="modalMeta"></div>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDescription"></p>
+        <div class="modal-columns">
+          <div>
+            <h3>Ingredients</h3>
+            <ul id="modalIngredients"></ul>
+          </div>
+          <div>
+            <h3>Method</h3>
+            <ol id="modalSteps"></ol>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
