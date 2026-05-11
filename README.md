@@ -1,4 +1,4 @@
-# Robin's Vegan Cookbook
+# Personal Recipes
 
 A static GitHub Pages cookbook site adapted from the portfolio design language: soft green surfaces, Lora headings, compact cards, and gentle interaction.
 
