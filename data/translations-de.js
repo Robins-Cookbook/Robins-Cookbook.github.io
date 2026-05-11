@@ -324,5 +324,38 @@ window.RECIPE_TRANSLATIONS.de = {
       'Mit Salz, Pfeffer, Rotwein, Gurkensud und optional pflanzlicher Sahne abschmecken.',
       'Die gebackenen Rouladen in die Soße geben und 20 Minuten köcheln lassen, nach 10 Minuten wenden.'
     ]
+  },
+  'orange-cream-pasta': {
+    title: 'Orangen-Cremepasta',
+    description: 'Eine glänzende Orangen-Version von Pasta al Limone mit Sahne, Butter, Parmesan, Orangenzeste und etwas frischem Orangensaft.',
+    tags: ['Pasta', 'Orange', 'schnell'],
+    sourceLink: {
+      label: 'Adaptiert von Bon Appetit Pasta al Limone'
+    },
+    feature: {
+      type: 'Adaption',
+      title: 'Orange statt Zitrone',
+      text: 'Orange ist süßer und weicher als Zitrone. Diese Version setzt deshalb auf viel Zeste für Aroma und nur genug Saft, um die Sahnesauce aufzuhellen.'
+    },
+    ingredients: [
+      { amount: 1, unit: '', item: 'große Orange' },
+      { amount: 340, unit: 'g', item: 'Spaghetti oder andere lange Pasta' },
+      { amount: null, unit: '', item: 'Koscheres Salz' },
+      { amount: 180, unit: 'ml', item: 'Sahne' },
+      { amount: 85, unit: 'g', item: 'ungesalzene Butter, in Esslöffelstücke geschnitten' },
+      { amount: 85, unit: 'g', item: 'Parmesan, fein gerieben' },
+      { amount: null, unit: '', item: 'frisch gemahlener schwarzer Pfeffer' }
+    ],
+    steps: [
+      'Mit einem Sparschäler ein paar breite Streifen Orangenzeste abziehen und für das Servieren in dünne Streifen schneiden.',
+      'Die restliche Orangenschale fein in einen breiten Topf oder Bräter reiben. Orange auspressen und 2 Esslöffel Saft beiseitestellen.',
+      'Pasta in kräftig gesalzenem kochendem Wasser sehr al dente kochen. Mindestens 1 1/2 Tassen Pastawasser aufbewahren.',
+      'Während die Pasta kocht, Sahne mit der geriebenen Orangenschale bei mittlerer Hitze erwärmen, bis sie gerade zu simmern beginnt.',
+      'Hitze reduzieren und die Butter Stück für Stück einrühren, bis jedes Stück in der Sahne geschmolzen ist.',
+      'Etwa 3/4 Tasse Pastawasser zur Orangencreme geben, dann die Pasta hinzufügen und bei mittlerer Hitze schwenken.',
+      'Parmesan nach und nach einarbeiten, bis die Sauce glänzt und die Pasta überzieht. Mit mehr Pastawasser lockern, falls sie zu stark anzieht.',
+      'Topf vom Herd nehmen und den beiseitegestellten Orangensaft einrühren. Abschmecken und bei Bedarf salzen.',
+      'Mit schwarzem Pfeffer und den feinen Orangen-Zestenstreifen servieren.'
+    ]
   }
 };

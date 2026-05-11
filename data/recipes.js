@@ -11,7 +11,8 @@ window.RECIPE_FILES = [
   "tofu-scramble.js",
   "butter-emulsion.js",
   "sriracha-butter-emulsion.js",
-  "vegan-rouladen.js"
+  "vegan-rouladen.js",
+  "orange-cream-pasta.js"
 ];
 
 (function loadRecipeFiles() {
