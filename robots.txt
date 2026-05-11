@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://schrammr.github.io/RobinsVeganCookbook.github.io/sitemap.xml
+Sitemap: https://schrammr.github.io/Robins-Cookbook.github.io/sitemap.xml
