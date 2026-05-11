@@ -8,7 +8,7 @@ window.RECIPES.push({
   season: 'Anytime',
   favorite: true,
   image: '',
-  description: 'A glossy butter sauce made by whisking cold butter into a small amount of hot liquid until it turns smooth and spoonable.',
+  description: 'A glossy butter-water sauce made by heating water with most of the butter, then blending in the final cold butter to emulsify.',
   tags: [
     'sauce',
     'butter',
@@ -28,7 +28,7 @@ window.RECIPES.push({
     waterParts: 2,
     firstButterShare: 0.75,
     roundTo: 0.5,
-    note: 'The emulsion uses a fixed 5:2 ratio of butter to water. Three quarters of the butter starts the emulsion; the final quarter is whisked in as the second batch.'
+    note: 'The source batch is 800 g water to 2 kg butter: 1.5 kg butter in the pan first, then 500 g cold butter blended in at the end.'
   },
   relatedRecipes: [
     {
@@ -43,44 +43,44 @@ window.RECIPES.push({
   feature: {
     type: 'technique',
     title: '5:2 butter emulsion',
-    text: 'Keep the total ratio at 5 parts butter to 2 parts water. Separate three quarters of the butter for the first batch and the remaining quarter for the second batch.'
+    text: 'Keep the total ratio at 5 parts butter to 2 parts water. Heat the water with three quarters of the butter first, then blend in the remaining cold butter to stabilize the emulsion.'
   },
   ingredients: [
     {
       amount: 28.5,
       unit: 'ml',
-      item: 'water or light vegetable stock',
+      item: 'water',
       role: 'yieldWater'
     },
     {
       amount: 71.5,
       unit: 'g',
-      item: 'cold butter, cubed, total',
+      item: 'butter, diced, total',
       role: 'yieldButterTotal'
     },
     {
       amount: 53.5,
       unit: 'g',
-      item: 'cold butter, cubed, first batch',
+      item: 'butter, diced, first batch',
       role: 'yieldButterFirst'
     },
     {
       amount: 18,
       unit: 'g',
-      item: 'cold butter, cubed, second batch',
+      item: 'cold butter, diced, second batch',
       role: 'yieldButterSecond'
     },
     {
-      amount: 1,
-      unit: 'pinch',
-      item: 'salt'
+      amount: null,
+      unit: '',
+      item: 'salt, to taste'
     }
   ],
   steps: [
-    'Weigh the butter, then separate three quarters for the first batch and the remaining quarter for the second batch.',
-    'Bring the water or stock to a simmer in a small pan, then lower the heat.',
-    'Whisk in the first batch of cold butter a few cubes at a time, letting each addition melt into the sauce before adding more.',
-    'Whisk in the second batch of butter at the end to finish and tighten the emulsion.',
-    'Season with salt, then keep warm over very low heat and serve immediately.'
+    'Weigh the butter, then separate three quarters for the first batch and the remaining quarter for the second cold batch.',
+    'Add the water and first butter batch to a pan and heat over medium until the butter has melted into the water.',
+    'Season with salt for a base layer of seasoning.',
+    'Take the pan off the heat, add the second cold butter batch, and blend with a stick blender for 20 to 30 seconds until smooth and emulsified.',
+    'Keep warm over very low heat and use as a base sauce.'
   ]
 });
