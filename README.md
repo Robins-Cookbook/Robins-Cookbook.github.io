@@ -4,13 +4,17 @@ A static GitHub Pages cookbook site adapted from the portfolio design language: 
 
 ## Editing Recipes
 
-Recipes currently live in `data/recipes.js` inside the `RECIPES` array. Each recipe has:
+Each recipe lives in its own file in `data/recipes/`. The tiny `data/recipes.js` loader initializes `window.RECIPES`, lists the recipe files, and loads them for the homepage and detail pages.
+
+Each recipe has:
 
 - `title`, `category`, `time`, `season`, and `favorite`
 - `image`, `description`, and `tags`
 - `ingredients` and `steps`
 
 The site renders cards automatically, supports search, category filters, sorting, and links each card to a dedicated page in `recipes/`.
+
+When adding a recipe, create `data/recipes/<id>.js`, add that filename to `window.RECIPE_FILES` in `data/recipes.js`, create `recipes/<id>.html`, and add the URL to `sitemap.xml`.
 
 Individual recipe pages can optionally include extras:
 
