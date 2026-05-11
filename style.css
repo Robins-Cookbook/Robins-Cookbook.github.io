@@ -297,6 +297,29 @@ button, input, select { font: inherit; }
   background: var(--color-surface);
 }
 
+.recipe-card-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background:
+    linear-gradient(135deg, rgba(245,232,188,.72), rgba(212,232,217,.7)),
+    var(--color-surface);
+  display: grid;
+  place-items: center;
+  color: #4d6747;
+  border-bottom: 1px solid rgba(122,148,108,.16);
+}
+
+.recipe-card-placeholder span {
+  border: 1px solid rgba(90,138,94,.24);
+  border-radius: 99px;
+  padding: 6px 12px;
+  background: rgba(255,255,255,.55);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
 .recipe-card-body {
   padding: 18px;
   display: flex;
@@ -386,6 +409,10 @@ footer {
   padding-bottom: 48px;
 }
 
+.recipe-hero-grid-no-image {
+  grid-template-columns: minmax(0, 760px);
+}
+
 .back-link {
   display: inline-flex;
   margin-bottom: 18px;
@@ -421,16 +448,46 @@ footer {
   box-shadow: var(--shadow-md);
 }
 
+.recipe-body {
+  padding-top: 48px;
+}
+
+.recipe-top-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  margin-bottom: 42px;
+}
+
+.recipe-info-block {
+  border-top: 3px solid var(--color-accent);
+  padding-top: 14px;
+}
+
+.recipe-info-block h2 {
+  font-size: 1.02rem;
+  margin-bottom: 8px;
+}
+
+.recipe-info-block p {
+  color: var(--color-text-muted);
+  font-size: .93rem;
+}
+
 .recipe-detail-grid {
   display: grid;
-  grid-template-columns: minmax(240px, .7fr) minmax(0, 1fr) minmax(260px, .8fr);
-  gap: 22px;
+  grid-template-columns: minmax(240px, .72fr) minmax(0, 1.08fr);
+  gap: 56px;
   align-items: start;
 }
 
-.recipe-panel,
+.recipe-panel {
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+}
+
 .recipe-tool {
-  background: var(--color-surface);
+  background: var(--color-panel);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 22px;
@@ -454,6 +511,8 @@ footer {
 .recipe-feature-stack {
   display: grid;
   gap: 14px;
+  grid-column: 1 / -1;
+  max-width: 420px;
 }
 
 .tool-kicker {
@@ -490,10 +549,6 @@ footer {
   width: 100%;
   accent-color: var(--color-accent);
   margin-bottom: 12px;
-}
-
-.source-tool .btn {
-  margin-top: 12px;
 }
 
 .related-recipe-list {
@@ -553,6 +608,10 @@ footer {
 
   .recipe-hero-grid,
   .recipe-detail-grid { grid-template-columns: 1fr; }
+
+  .recipe-detail-grid {
+    gap: 34px;
+  }
 }
 
 @media (max-width: 520px) {

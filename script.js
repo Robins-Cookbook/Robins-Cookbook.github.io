@@ -75,8 +75,11 @@ function buildRecipeCard(recipe) {
   card.className = "recipe-card reveal";
   card.href = recipeUrl(recipe);
   card.setAttribute("aria-label", `Open recipe for ${recipe.title}`);
+  const media = recipe.image
+    ? `<img src="${recipe.image}" alt="${recipe.title}" loading="lazy" />`
+    : `<div class="recipe-card-placeholder" aria-hidden="true"><span>${recipe.category}</span></div>`;
   card.innerHTML = `
-    <img src="${recipe.image}" alt="${recipe.title}" loading="lazy" />
+    ${media}
     <div class="recipe-card-body">
       <div class="recipe-meta-row">
         <span class="recipe-category">${recipe.category}</span>

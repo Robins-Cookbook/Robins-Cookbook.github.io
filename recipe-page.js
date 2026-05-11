@@ -29,6 +29,21 @@ function formatIngredient(ingredient, scale = 1) {
     .join(" ");
 }
 
+function getRecipeUrl(recipe) {
+  return `${recipe.id}.html`;
+}
+
+function getRatioIngredient(ingredient, ratioState) {
+  if (!ratioState || !ingredient.role) return ingredient;
+  if (ingredient.role === "ratioLiquid") {
+    return { ...ingredient, amount: ratioState.liquidAmount, unit: ratioState.liquidUnit };
+  }
+  if (ingredient.role === "ratioButter") {
+    return { ...ingredient, amount: ratioState.liquidAmount * ratioState.ratio, unit: ratioState.butterUnit };
+  }
+  return ingredient;
+}
+
 function getRecipe() {
   const id = document.body.dataset.recipeId;
   return RECIPES.find((recipe) => recipe.id === id);
@@ -37,7 +52,12 @@ function getRecipe() {
 function getInitialTarget(recipe) {
   if (!recipe.calculator) return recipe.baseServings || 1;
   if (recipe.calculator.type === "pan") return recipe.calculator.basePan;
+  if (recipe.calculator.type === "ratio") return recipe.calculator.value;
   return recipe.baseServings || recipe.calculator.min || 1;
+}
+
+function formatRatio(value) {
+  return Number.isInteger(value) ? String(value) : String(value).replace(".5", " 1/2");
 }
 
 function getScale(recipe, target) {
@@ -48,47 +68,34 @@ function getScale(recipe, target) {
   return target / recipe.baseServings;
 }
 
-function renderIngredientList(recipe, scale = 1) {
+function renderIngredientList(recipe, scale = 1, ratioState = null) {
   const list = document.getElementById("ingredientList");
   if (!list) return;
   list.innerHTML = recipe.ingredients
-    .map((ingredient) => `<li>${formatIngredient(ingredient, scale)}</li>`)
+    .map((ingredient) => `<li>${formatIngredient(getRatioIngredient(ingredient, ratioState), scale)}</li>`)
     .join("");
 }
 
-function renderFeature(recipe) {
-  const panel = document.getElementById("recipeFeature");
+function getRelatedLinks(recipe) {
+  return (recipe.relatedRecipes || [])
+    .map((related) => {
+      const target = RECIPES.find((item) => item.id === related.recipeId);
+      if (!target) return "";
+      return `<a class="related-recipe-link" href="${getRecipeUrl(target)}">${related.label}</a>`;
+    })
+    .filter(Boolean)
+    .join("");
+}
+
+function renderTopInfo(recipe) {
+  const panel = document.getElementById("recipeTopInfo");
   if (!panel) return;
 
   const blocks = [];
 
-  if (recipe.calculator) {
-    const target = getInitialTarget(recipe);
-    const unit = recipe.calculator.unit ? ` ${recipe.calculator.unit}` : "";
-    blocks.push(`
-      <section class="recipe-tool">
-        <span class="tool-kicker">Calculator</span>
-        <h2>${recipe.calculator.title}</h2>
-        <label class="range-control" for="recipeScale">
-          <span>${recipe.calculator.label}</span>
-          <strong id="scaleValue">${target}${unit}</strong>
-        </label>
-        <input
-          id="recipeScale"
-          type="range"
-          min="${recipe.calculator.min}"
-          max="${recipe.calculator.max}"
-          value="${target}"
-          step="${recipe.calculator.type === "pan" ? "1" : "1"}"
-        />
-        <p>${recipe.calculator.note}</p>
-      </section>
-    `);
-  }
-
   if (recipe.feature) {
     blocks.push(`
-      <section class="recipe-tool">
+      <section class="recipe-info-block">
         <span class="tool-kicker">${recipe.feature.type}</span>
         <h2>${recipe.feature.title}</h2>
         <p>${recipe.feature.text}</p>
@@ -98,43 +105,74 @@ function renderFeature(recipe) {
 
   if (recipe.sourceVideo) {
     blocks.push(`
-      <section class="recipe-tool source-tool">
+      <section class="recipe-info-block">
         <span class="tool-kicker">Source video</span>
         <h2>${recipe.sourceVideo.label}</h2>
-        <a class="btn btn-secondary" href="${recipe.sourceVideo.url}" target="_blank" rel="noopener">Open video source</a>
+        <a class="text-link" href="${recipe.sourceVideo.url}" target="_blank" rel="noopener">Open video source</a>
       </section>
     `);
   }
 
   if (recipe.sourceLink) {
     blocks.push(`
-      <section class="recipe-tool source-tool">
+      <section class="recipe-info-block">
         <span class="tool-kicker">Reference</span>
         <h2>${recipe.sourceLink.label}</h2>
-        <a class="btn btn-secondary" href="${recipe.sourceLink.url}" target="_blank" rel="noopener">Open reference</a>
+        <a class="text-link" href="${recipe.sourceLink.url}" target="_blank" rel="noopener">Open reference</a>
       </section>
     `);
   }
 
-  if (recipe.relatedRecipes && recipe.relatedRecipes.length) {
-    const links = recipe.relatedRecipes
-      .map((related) => {
-        const target = RECIPES.find((item) => item.id === related.recipeId);
-        const href = target ? `${target.id}.html` : "#";
-        return `<a class="related-recipe-link" href="${href}">${related.label}</a>`;
-      })
-      .join("");
-
+  const relatedLinks = getRelatedLinks(recipe);
+  if (relatedLinks) {
     blocks.push(`
-      <section class="recipe-tool">
+      <section class="recipe-info-block">
         <span class="tool-kicker">Related recipe</span>
         <h2>How this connects</h2>
-        <div class="related-recipe-list">${links}</div>
+        <div class="related-recipe-list">${relatedLinks}</div>
       </section>
     `);
   }
 
   panel.innerHTML = blocks.join("");
+  panel.hidden = !blocks.length;
+}
+
+function renderCalculator(recipe) {
+  const panel = document.getElementById("recipeFeature");
+  if (!panel) return;
+
+  const blocks = [];
+
+  if (recipe.calculator) {
+    const target = getInitialTarget(recipe);
+    const unit = recipe.calculator.unit ? ` ${recipe.calculator.unit}` : "";
+    const value = recipe.calculator.type === "ratio"
+      ? `${formatRatio(target)}:1`
+      : `${target}${unit}`;
+    blocks.push(`
+      <section class="recipe-tool">
+        <span class="tool-kicker">Calculator</span>
+        <h2>${recipe.calculator.title}</h2>
+        <label class="range-control" for="recipeScale">
+          <span>${recipe.calculator.label}</span>
+          <strong id="scaleValue">${value}</strong>
+        </label>
+        <input
+          id="recipeScale"
+          type="range"
+          min="${recipe.calculator.min}"
+          max="${recipe.calculator.max}"
+          value="${target}"
+          step="${recipe.calculator.type === "ratio" ? ".5" : "1"}"
+        />
+        <p>${recipe.calculator.note}</p>
+      </section>
+    `);
+  }
+
+  panel.innerHTML = blocks.join("");
+  panel.hidden = !blocks.length;
 
   const slider = document.getElementById("recipeScale");
   if (!slider) return;
@@ -143,8 +181,18 @@ function renderFeature(recipe) {
 
   slider.addEventListener("input", () => {
     const target = Number(slider.value);
-    value.textContent = `${target}${unit}`;
-    renderIngredientList(recipe, getScale(recipe, target));
+    if (recipe.calculator.type === "ratio") {
+      value.textContent = `${formatRatio(target)}:1`;
+      renderIngredientList(recipe, 1, {
+        ratio: target,
+        liquidAmount: recipe.calculator.liquidAmount,
+        liquidUnit: recipe.calculator.liquidUnit,
+        butterUnit: recipe.calculator.butterUnit
+      });
+    } else {
+      value.textContent = `${target}${unit}`;
+      renderIngredientList(recipe, getScale(recipe, target));
+    }
   });
 }
 
@@ -167,9 +215,12 @@ function renderRecipePage() {
   const description = document.querySelector("meta[name='description']");
   if (description) description.setAttribute("content", recipe.description);
 
+  const heroClass = recipe.image ? "recipe-hero-grid" : "recipe-hero-grid recipe-hero-grid-no-image";
+  const imageHtml = recipe.image ? `<img src="${recipe.image}" alt="${recipe.title}" />` : "";
+
   page.innerHTML = `
     <section class="recipe-hero-detail">
-      <div class="section-inner recipe-hero-grid">
+      <div class="section-inner ${heroClass}">
         <div>
           <a class="back-link" href="../index.html">Back to recipes</a>
           <div class="recipe-meta-row">
@@ -184,27 +235,31 @@ function renderRecipePage() {
             ${recipe.tags.map((tag) => `<span>${tag}</span>`).join("")}
           </div>
         </div>
-        <img src="${recipe.image}" alt="${recipe.title}" />
+        ${imageHtml}
       </div>
     </section>
 
-    <section class="section-inner recipe-detail-grid">
-      <article class="recipe-panel">
+    <section class="section-inner recipe-body">
+      <div class="recipe-top-info" id="recipeTopInfo" hidden></div>
+      <div class="recipe-detail-grid">
+        <article class="recipe-panel">
         <h2>Ingredients</h2>
         <ul id="ingredientList"></ul>
-      </article>
-      <article class="recipe-panel">
+        </article>
+        <article class="recipe-panel">
         <h2>Method</h2>
         <ol>
           ${recipe.steps.map((step) => `<li>${step}</li>`).join("")}
         </ol>
-      </article>
-      <aside class="recipe-feature-stack" id="recipeFeature"></aside>
+        </article>
+        <aside class="recipe-feature-stack" id="recipeFeature" hidden></aside>
+      </div>
     </section>
   `;
 
   renderIngredientList(recipe);
-  renderFeature(recipe);
+  renderTopInfo(recipe);
+  renderCalculator(recipe);
 }
 
 function initFooterYear() {
