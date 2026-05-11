@@ -8,6 +8,10 @@ const state = {
 
 const categories = ["All", "Breakfast", "Mains", "Soups", "Sides", "Sauces", "Sweets"];
 
+function getDisplayRecipe(recipe) {
+  return typeof localizeRecipe === "function" ? localizeRecipe(recipe) : recipe;
+}
+
 function recipeUrl(recipe) {
   return `recipes/${recipe.id}.html`;
 }
@@ -15,7 +19,10 @@ function recipeUrl(recipe) {
 function formatAmount(value) {
   if (value === null || value === undefined) return "";
   if (Number.isInteger(value)) return String(value);
-  return String(value).replace(/^0\./, ".");
+  const formatted = String(value).replace(/^0\./, ".");
+  return typeof getLanguage === "function" && getLanguage() === "de"
+    ? formatted.replace(".", ",")
+    : formatted;
 }
 
 function ingredientText(ingredient) {
@@ -25,13 +32,14 @@ function ingredientText(ingredient) {
 }
 
 function recipeMatches(recipe) {
+  const displayRecipe = getDisplayRecipe(recipe);
   const haystack = [
-    recipe.title,
-    recipe.category,
-    recipe.season,
-    recipe.description,
-    ...recipe.tags,
-    ...recipe.ingredients.map(ingredientText)
+    displayRecipe.title,
+    displayRecipe.categoryLabel || displayRecipe.category,
+    displayRecipe.seasonLabel || displayRecipe.season,
+    displayRecipe.description,
+    ...displayRecipe.tags,
+    ...displayRecipe.ingredients.map(ingredientText)
   ].join(" ").toLowerCase();
 
   const matchesCategory = state.category === "All" || recipe.category === state.category;
@@ -43,10 +51,12 @@ function getVisibleRecipes() {
   return RECIPES
     .filter(recipeMatches)
     .sort((a, b) => {
-      if (state.sort === "time") return a.time - b.time || a.title.localeCompare(b.title);
-      if (state.sort === "name") return a.title.localeCompare(b.title);
+      const recipeA = getDisplayRecipe(a);
+      const recipeB = getDisplayRecipe(b);
+      if (state.sort === "time") return a.time - b.time || recipeA.title.localeCompare(recipeB.title);
+      if (state.sort === "name") return recipeA.title.localeCompare(recipeB.title);
       if (a.favorite !== b.favorite) return a.favorite ? -1 : 1;
-      return a.title.localeCompare(b.title);
+      return recipeA.title.localeCompare(recipeB.title);
     });
 }
 
@@ -59,7 +69,7 @@ function renderFilters() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = `filter-btn${category === state.category ? " active" : ""}`;
-    button.textContent = category;
+    button.textContent = category === "All" ? t("categories.All") : t(`categories.${category}`);
     button.setAttribute("aria-pressed", String(category === state.category));
     button.addEventListener("click", () => {
       state.category = category;
@@ -71,25 +81,26 @@ function renderFilters() {
 }
 
 function buildRecipeCard(recipe) {
+  const displayRecipe = getDisplayRecipe(recipe);
   const card = document.createElement("a");
   card.className = "recipe-card reveal";
   card.href = recipeUrl(recipe);
-  card.setAttribute("aria-label", `Open recipe for ${recipe.title}`);
-  const media = recipe.image
-    ? `<img src="${recipe.image}" alt="${recipe.title}" loading="lazy" />`
-    : `<div class="recipe-card-placeholder" aria-hidden="true"><span>${recipe.category}</span></div>`;
+  card.setAttribute("aria-label", `${t("openRecipe")} ${displayRecipe.title}`);
+  const media = displayRecipe.image
+    ? `<img src="${displayRecipe.image}" alt="${displayRecipe.title}" loading="lazy" />`
+    : `<div class="recipe-card-placeholder" aria-hidden="true"><span>${displayRecipe.categoryLabel}</span></div>`;
   card.innerHTML = `
     ${media}
     <div class="recipe-card-body">
       <div class="recipe-meta-row">
-        <span class="recipe-category">${recipe.category}</span>
-        <span class="recipe-time">${recipe.time} min</span>
-        ${recipe.favorite ? '<span class="recipe-favorite">Favorite</span>' : ""}
+        <span class="recipe-category">${displayRecipe.categoryLabel}</span>
+        <span class="recipe-time">${displayRecipe.time} min</span>
+        ${displayRecipe.favorite ? `<span class="recipe-favorite">${t("favorite")}</span>` : ""}
       </div>
-      <h3>${recipe.title}</h3>
-      <p>${recipe.description}</p>
+      <h3>${displayRecipe.title}</h3>
+      <p>${displayRecipe.description}</p>
       <div class="recipe-tags">
-        ${recipe.tags.map((tag) => `<span>${tag}</span>`).join("")}
+        ${displayRecipe.tags.map((tag) => `<span>${tag}</span>`).join("")}
       </div>
     </div>
   `;
@@ -106,13 +117,46 @@ function renderRecipes() {
   if (!recipes.length) {
     const empty = document.createElement("p");
     empty.className = "empty-state";
-    empty.textContent = "No matching recipes yet.";
+    empty.textContent = t("noMatches");
     grid.appendChild(empty);
     return;
   }
 
   recipes.forEach((recipe) => grid.appendChild(buildRecipeCard(recipe)));
   initReveal();
+}
+
+function setHomePageText() {
+  const description = t("siteDescription");
+  document.title = SITE_NAME;
+  document.querySelector("meta[name='description']")?.setAttribute("content", description);
+  document.querySelector("meta[property='og:title']")?.setAttribute("content", SITE_NAME);
+  document.querySelector("meta[property='og:description']")?.setAttribute("content", description);
+  document.querySelector("meta[name='twitter:title']")?.setAttribute("content", SITE_NAME);
+  document.querySelector("meta[name='twitter:description']")?.setAttribute("content", description);
+
+  const schema = document.querySelector("script[type='application/ld+json']");
+  if (schema) {
+    schema.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: SITE_NAME,
+      url: "https://robins-cookbook.github.io/",
+      description
+    }, null, 2);
+  }
+
+  document.querySelector(".hero-search")?.setAttribute("aria-label", t("findRecipe"));
+  document.querySelector("label[for='recipeSearch']").textContent = t("findRecipe");
+  document.getElementById("recipeSearch")?.setAttribute("placeholder", t("searchPlaceholder"));
+  document.querySelector(".search-row .btn").textContent = t("browse");
+  document.querySelector(".section-title").textContent = t("recipes");
+  document.querySelector(".sort-control span").textContent = t("sort");
+  document.getElementById("recipeSort")?.setAttribute("aria-label", t("sortRecipes"));
+  document.querySelector("#recipeSort option[value='favorite']").textContent = t("favoritesFirst");
+  document.querySelector("#recipeSort option[value='time']").textContent = t("fastestFirst");
+  document.getElementById("categoryFilters")?.setAttribute("aria-label", t("filterRecipes"));
+  setCommonPageText();
 }
 
 function initSearchAndSort() {
@@ -170,8 +214,10 @@ function initFooterYear() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  setHomePageText();
   initFooterYear();
   initHeader();
+  initLanguageToggle();
   initSearchAndSort();
   renderFilters();
   renderRecipes();

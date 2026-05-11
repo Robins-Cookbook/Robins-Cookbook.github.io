@@ -1,5 +1,9 @@
 const RECIPES = window.RECIPES || [];
 
+function getDisplayRecipe(recipe) {
+  return typeof localizeRecipe === "function" ? localizeRecipe(recipe) : recipe;
+}
+
 function formatAmount(value) {
   if (value === null || value === undefined) return "";
   const whole = Math.floor(value);
@@ -16,7 +20,10 @@ function formatAmount(value) {
   }
   const rounded = Math.round(value * 100) / 100;
   if (Number.isInteger(rounded)) return String(rounded);
-  return String(rounded).replace(/^0\./, ".");
+  const formatted = String(rounded).replace(/^0\./, ".");
+  return typeof getLanguage === "function" && getLanguage() === "de"
+    ? formatted.replace(".", ",")
+    : formatted;
 }
 
 function formatIngredient(ingredient, scale = 1) {
@@ -151,9 +158,9 @@ function renderTopInfo(recipe) {
   if (recipe.sourceVideo) {
     blocks.push(`
       <section class="recipe-info-block">
-        <span class="tool-kicker">Source video</span>
+        <span class="tool-kicker">${t("sourceVideo")}</span>
         <h2>${recipe.sourceVideo.label}</h2>
-        <a class="text-link" href="${recipe.sourceVideo.url}" target="_blank" rel="noopener">Open video source</a>
+        <a class="text-link" href="${recipe.sourceVideo.url}" target="_blank" rel="noopener">${t("openVideoSource")}</a>
       </section>
     `);
   }
@@ -161,9 +168,9 @@ function renderTopInfo(recipe) {
   if (recipe.sourceLink) {
     blocks.push(`
       <section class="recipe-info-block">
-        <span class="tool-kicker">Reference</span>
+        <span class="tool-kicker">${t("reference")}</span>
         <h2>${recipe.sourceLink.label}</h2>
-        <a class="text-link" href="${recipe.sourceLink.url}" target="_blank" rel="noopener">Open reference</a>
+        <a class="text-link" href="${recipe.sourceLink.url}" target="_blank" rel="noopener">${t("openReference")}</a>
       </section>
     `);
   }
@@ -172,8 +179,8 @@ function renderTopInfo(recipe) {
   if (relatedLinks) {
     blocks.push(`
       <section class="recipe-info-block">
-        <span class="tool-kicker">Related recipe</span>
-        <h2>How this connects</h2>
+        <span class="tool-kicker">${t("relatedRecipe")}</span>
+        <h2>${t("howThisConnects")}</h2>
         <div class="related-recipe-list">${relatedLinks}</div>
       </section>
     `);
@@ -196,7 +203,7 @@ function renderCalculator(recipe) {
     const step = recipe.calculator.step || (recipe.calculator.type === "ratio" ? ".5" : "1");
     blocks.push(`
       <section class="recipe-tool">
-        <span class="tool-kicker">Calculator</span>
+        <span class="tool-kicker">${t("calculator")}</span>
         <h2>${recipe.calculator.title}</h2>
         <label class="range-control" for="recipeScale">
           <span>${recipe.calculator.label}</span>
@@ -240,41 +247,42 @@ function renderCalculator(recipe) {
 
 function renderRecipePage() {
   const recipe = getRecipe();
+  const displayRecipe = recipe ? getDisplayRecipe(recipe) : null;
   const page = document.getElementById("recipePage");
   if (!page) return;
 
   if (!recipe) {
     page.innerHTML = `
       <div class="section-inner recipe-not-found">
-        <h1>Recipe not found</h1>
-        <a class="btn btn-primary" href="../index.html">Back to recipes</a>
+        <h1>${t("recipeNotFound")}</h1>
+        <a class="btn btn-primary" href="../index.html">${t("backToRecipes")}</a>
       </div>
     `;
     return;
   }
 
-  document.title = `${recipe.title} | Personal Recipes`;
+  document.title = `${displayRecipe.title} | ${SITE_NAME}`;
   const description = document.querySelector("meta[name='description']");
-  if (description) description.setAttribute("content", recipe.description);
+  if (description) description.setAttribute("content", displayRecipe.description);
 
-  const heroClass = recipe.image ? "recipe-hero-grid" : "recipe-hero-grid recipe-hero-grid-no-image";
-  const imageHtml = recipe.image ? `<img src="${recipe.image}" alt="${recipe.title}" />` : "";
+  const heroClass = displayRecipe.image ? "recipe-hero-grid" : "recipe-hero-grid recipe-hero-grid-no-image";
+  const imageHtml = displayRecipe.image ? `<img src="${displayRecipe.image}" alt="${displayRecipe.title}" />` : "";
 
   page.innerHTML = `
     <section class="recipe-hero-detail">
       <div class="section-inner ${heroClass}">
         <div>
-          <a class="back-link" href="../index.html">Back to recipes</a>
+          <a class="back-link" href="../index.html">${t("backToRecipes")}</a>
           <div class="recipe-meta-row">
-            <span class="recipe-category">${recipe.category}</span>
-            <span class="recipe-time">${recipe.time} min</span>
-            <span class="recipe-season">${recipe.season}</span>
-            ${recipe.favorite ? '<span class="recipe-favorite">Favorite</span>' : ""}
+            <span class="recipe-category">${displayRecipe.categoryLabel}</span>
+            <span class="recipe-time">${displayRecipe.time} min</span>
+            <span class="recipe-season">${displayRecipe.seasonLabel}</span>
+            ${displayRecipe.favorite ? `<span class="recipe-favorite">${t("favorite")}</span>` : ""}
           </div>
-          <h1>${recipe.title}</h1>
-          <p>${recipe.description}</p>
+          <h1>${displayRecipe.title}</h1>
+          <p>${displayRecipe.description}</p>
           <div class="recipe-tags">
-            ${recipe.tags.map((tag) => `<span>${tag}</span>`).join("")}
+            ${displayRecipe.tags.map((tag) => `<span>${tag}</span>`).join("")}
           </div>
         </div>
         ${imageHtml}
@@ -285,13 +293,13 @@ function renderRecipePage() {
       <div class="recipe-top-info" id="recipeTopInfo" hidden></div>
       <div class="recipe-detail-grid">
         <article class="recipe-panel">
-        <h2>Ingredients</h2>
+        <h2>${t("ingredients")}</h2>
         <ul id="ingredientList"></ul>
         </article>
         <article class="recipe-panel">
-        <h2>Method</h2>
+        <h2>${t("method")}</h2>
         <ol>
-          ${recipe.steps.map((step) => `<li>${step}</li>`).join("")}
+          ${displayRecipe.steps.map((step) => `<li>${step}</li>`).join("")}
         </ol>
         </article>
         <aside class="recipe-feature-stack" id="recipeFeature" hidden></aside>
@@ -299,9 +307,9 @@ function renderRecipePage() {
     </section>
   `;
 
-  renderIngredientList(recipe, 1, getCalculatorIngredientState(recipe));
-  renderTopInfo(recipe);
-  renderCalculator(recipe);
+  renderIngredientList(displayRecipe, 1, getCalculatorIngredientState(displayRecipe));
+  renderTopInfo(displayRecipe);
+  renderCalculator(displayRecipe);
 }
 
 function initFooterYear() {
@@ -310,6 +318,8 @@ function initFooterYear() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  setCommonPageText();
+  initLanguageToggle();
   initFooterYear();
   renderRecipePage();
 });

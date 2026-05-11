@@ -1,10 +1,12 @@
-# Personal Recipes
+# Robin's Recipes
 
 A static GitHub Pages cookbook site adapted from the portfolio design language: soft green surfaces, Lora headings, compact cards, and gentle interaction.
 
 ## Editing Recipes
 
 Each recipe lives in its own file in `data/recipes/`. The tiny `data/recipes.js` loader initializes `window.RECIPES`, lists the recipe files, and loads them for the homepage and detail pages.
+
+The site supports English and German. English recipe files are the canonical source; German recipe text lives in `data/translations-de.js`. Shared UI labels and the language toggle live in `i18n.js`.
 
 Each recipe has:
 

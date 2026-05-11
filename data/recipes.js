@@ -23,7 +23,7 @@ window.RECIPE_FILES = [
   const recipeBase = new URL("recipes/", currentScript.src);
   const scripts = window.RECIPE_FILES
     .map((file) => `<script src="${new URL(file, recipeBase).href}"><\/script>`)
-    .join("");
+    .join("") + `<script src="${new URL("translations-de.js", currentScript.src).href}"><\/script>`;
 
   document.write(scripts);
 })();

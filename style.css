@@ -131,6 +131,34 @@ button, input, select { font: inherit; }
   text-decoration: none;
 }
 
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  padding: 3px;
+  background: rgba(255,255,255,.72);
+}
+
+.language-toggle button {
+  min-width: 38px;
+  min-height: 30px;
+  border: 0;
+  border-radius: 99px;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.language-toggle button.active {
+  background: var(--color-accent);
+  color: #fff;
+}
+
 .hero-section {
   display: flex;
   align-items: center;

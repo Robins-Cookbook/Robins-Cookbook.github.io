@@ -5,8 +5,10 @@ This is Robin's personal recipe site, published with GitHub Pages at `https://ro
 ## Site Structure
 
 - `index.html` is the homepage shell: header, search, filters, recipe grid, footer.
-- `data/recipes.js` initializes `window.RECIPES`, keeps the `window.RECIPE_FILES` manifest, and loads the individual recipe files.
+- `data/recipes.js` initializes `window.RECIPES`, keeps the `window.RECIPE_FILES` manifest, and loads the individual recipe files plus German translations.
 - `data/recipes/*.js` are the source of truth for recipe content. Each file pushes exactly one recipe object into `window.RECIPES`.
+- `data/translations-de.js` contains German recipe translations keyed by recipe id. Keep English recipe files canonical and put German display text here.
+- `i18n.js` contains shared UI translations, the `Robin's Recipes` site name, local storage language state, and the language toggle.
 - `script.js` renders the homepage search, category filters, sorting, and recipe cards.
 - `recipes/*.html` are small dedicated recipe page shells. Each one sets `data-recipe-id` on the `<body>`.
 - `recipe-page.js` renders a recipe detail page from the matching recipe object.
@@ -15,7 +17,7 @@ This is Robin's personal recipe site, published with GitHub Pages at `https://ro
 
 ## Design Preferences
 
-- The site name is `Personal Recipes`.
+- The site name is `Robin's Recipes`.
 - Keep the interface calm, practical, and personal. Avoid marketing copy, big landing-page sections, and explanatory feature text.
 - Recipe detail pages should not feel like everything is inside cards. Prefer a clear editorial layout: top context first, then ingredients, then method.
 - Use cards only where they make sense, such as recipe tiles on the homepage or a specific interactive tool.
@@ -49,10 +51,11 @@ window.RECIPES.push({
    - `baseServings`
    - `ingredients`
    - `steps`
-5. Add `<id>.js` to `window.RECIPE_FILES` in `data/recipes.js`. Keep the order intentional; it affects default display order when favorites tie.
-6. Create `recipes/<id>.html` using an existing recipe page as the template, and set `<body data-recipe-id="<id>">`.
-7. Add the new page URL to `sitemap.xml`.
-8. Run a basic check before committing:
+5. Add German text for the recipe to `data/translations-de.js`.
+6. Add `<id>.js` to `window.RECIPE_FILES` in `data/recipes.js`. Keep the order intentional; it affects default display order when favorites tie.
+7. Create `recipes/<id>.html` using an existing recipe page as the template, and set `<body data-recipe-id="<id>">`.
+8. Add the new page URL to `sitemap.xml`.
+9. Run a basic check before committing:
 
 ```bash
 node --check data/recipes.js && node --check script.js && node --check recipe-page.js
