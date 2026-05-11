@@ -116,6 +116,24 @@ function renderFeature(recipe) {
     `);
   }
 
+  if (recipe.relatedRecipes && recipe.relatedRecipes.length) {
+    const links = recipe.relatedRecipes
+      .map((related) => {
+        const target = RECIPES.find((item) => item.id === related.recipeId);
+        const href = target ? `${target.id}.html` : "#";
+        return `<a class="related-recipe-link" href="${href}">${related.label}</a>`;
+      })
+      .join("");
+
+    blocks.push(`
+      <section class="recipe-tool">
+        <span class="tool-kicker">Related recipe</span>
+        <h2>How this connects</h2>
+        <div class="related-recipe-list">${links}</div>
+      </section>
+    `);
+  }
+
   panel.innerHTML = blocks.join("");
 
   const slider = document.getElementById("recipeScale");

@@ -496,6 +496,21 @@ footer {
   margin-top: 12px;
 }
 
+.related-recipe-list {
+  display: grid;
+  gap: 8px;
+}
+
+.related-recipe-link {
+  display: block;
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+.related-recipe-link::after {
+  content: " ->";
+}
+
 .recipe-not-found {
   padding-top: calc(var(--nav-height) + 60px);
 }

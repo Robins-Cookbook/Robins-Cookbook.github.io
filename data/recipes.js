@@ -274,5 +274,91 @@ window.RECIPES = [
       "Add turmeric, nutritional yeast, black salt, and a splash of water.",
       "Fold in spinach and tomatoes, then serve on toast."
     ]
+  },
+  {
+    id: "butter-emulsion",
+    title: "Butter Emulsion Sauce",
+    category: "Sauces",
+    time: 10,
+    season: "Anytime",
+    favorite: true,
+    image: "https://img.youtube.com/vi/TLInSH3iJww/hqdefault.jpg",
+    description: "A glossy butter sauce made by whisking cold butter into a small amount of hot liquid until it turns smooth and spoonable.",
+    tags: ["sauce", "butter", "emulsion"],
+    baseServings: 4,
+    calculator: {
+      type: "servings",
+      title: "Sauce yield scaler",
+      label: "Servings",
+      min: 2,
+      max: 10,
+      note: "Keep the heat gentle and add butter gradually; the emulsion should stay glossy, not oily."
+    },
+    relatedRecipes: [
+      {
+        label: "Extend this into Sriracha Butter Emulsion",
+        recipeId: "sriracha-butter-emulsion"
+      }
+    ],
+    sourceVideo: {
+      label: "Technique source video",
+      url: "https://www.youtube.com/watch?v=TLInSH3iJww"
+    },
+    feature: {
+      type: "technique",
+      title: "Emulsion cue",
+      text: "If the sauce looks greasy, take it off the heat and whisk in a small splash of hot water before adding more butter."
+    },
+    ingredients: [
+      { amount: 60, unit: "ml", item: "water or light vegetable stock" },
+      { amount: 120, unit: "g", item: "cold butter, cubed" },
+      { amount: 0.5, unit: "tsp", item: "lemon juice or vinegar" },
+      { amount: 1, unit: "pinch", item: "salt" }
+    ],
+    steps: [
+      "Bring the water or stock to a simmer in a small pan, then lower the heat.",
+      "Whisk in the cold butter a few cubes at a time, letting each addition melt into the sauce before adding more.",
+      "Season with lemon juice or vinegar and salt, then keep warm over very low heat and serve immediately."
+    ]
+  },
+  {
+    id: "sriracha-butter-emulsion",
+    title: "Sriracha Butter Emulsion Sauce",
+    category: "Sauces",
+    time: 12,
+    season: "Anytime",
+    favorite: true,
+    image: "https://img.youtube.com/vi/TLInSH3iJww/hqdefault.jpg",
+    description: "A spicy, glossy extension of the butter emulsion sauce with sriracha, lime, and a little sweetness.",
+    tags: ["sauce", "sriracha", "butter"],
+    baseServings: 4,
+    relatedRecipes: [
+      {
+        label: "Based on Butter Emulsion Sauce",
+        recipeId: "butter-emulsion"
+      }
+    ],
+    sourceVideo: {
+      label: "Technique source video",
+      url: "https://www.youtube.com/watch?v=TLInSH3iJww"
+    },
+    feature: {
+      type: "heat note",
+      title: "Adjust the spice",
+      text: "Start with less sriracha if you want a rounder butter sauce. Add more at the end once the emulsion is stable."
+    },
+    ingredients: [
+      { amount: 45, unit: "ml", item: "water or light vegetable stock" },
+      { amount: 120, unit: "g", item: "cold butter, cubed" },
+      { amount: 2, unit: "tbsp", item: "sriracha" },
+      { amount: 1, unit: "tsp", item: "lime juice" },
+      { amount: 1, unit: "tsp", item: "maple syrup or honey" },
+      { amount: 1, unit: "pinch", item: "salt" }
+    ],
+    steps: [
+      "Warm the water or stock with the sriracha over low heat until steaming.",
+      "Whisk in cold butter a few cubes at a time, keeping the heat low so the sauce stays emulsified.",
+      "Finish with lime juice, maple syrup or honey, and salt. Taste and add more sriracha only after the sauce is glossy."
+    ]
   }
 ];

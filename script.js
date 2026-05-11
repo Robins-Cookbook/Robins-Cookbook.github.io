@@ -6,7 +6,7 @@ const state = {
   sort: "favorite"
 };
 
-const categories = ["All", "Breakfast", "Mains", "Soups", "Sides", "Sweets"];
+const categories = ["All", "Breakfast", "Mains", "Soups", "Sides", "Sauces", "Sweets"];
 
 function recipeUrl(recipe) {
   return `recipes/${recipe.id}.html`;
