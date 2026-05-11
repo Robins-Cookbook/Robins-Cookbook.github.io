@@ -8,7 +8,7 @@ window.RECIPES.push({
   season: 'Anytime',
   favorite: true,
   image: '',
-  description: 'A spicy, glossy extension of the butter emulsion sauce with sriracha, lime, and a little sweetness.',
+  description: 'A spicy butter-emulsion sauce from the video, loosened with sriracha, confit garlic, salt, lemon juice, and parsley.',
   tags: [
     'sauce',
     'sriracha',
@@ -26,45 +26,47 @@ window.RECIPES.push({
     url: 'https://www.youtube.com/watch?v=TLInSH3iJww'
   },
   feature: {
-    type: 'heat note',
-    title: 'Adjust the spice',
-    text: 'Start with less sriracha if you want a rounder butter sauce. Add more at the end once the emulsion is stable.'
+    type: 'video use',
+    title: 'Sriracha mussel sauce',
+    text: 'In the video this is made in the mussel pan: white wine opens the mussels, then butter emulsion and sriracha loosen into a glossy sauce.'
   },
   ingredients: [
     {
-      amount: 45,
-      unit: 'ml',
-      item: 'water or light vegetable stock'
+      amount: null,
+      unit: '',
+      item: 'butter emulsion sauce'
     },
     {
-      amount: 120,
-      unit: 'g',
-      item: 'cold butter, cubed'
+      amount: null,
+      unit: '',
+      item: 'sriracha, to taste'
     },
     {
-      amount: 2,
-      unit: 'tbsp',
-      item: 'sriracha'
+      amount: null,
+      unit: '',
+      item: 'confit garlic or roasted garlic paste'
     },
     {
-      amount: 1,
-      unit: 'tsp',
-      item: 'lime juice'
+      amount: null,
+      unit: '',
+      item: 'fresh lemon juice'
     },
     {
-      amount: 1,
-      unit: 'tsp',
-      item: 'maple syrup or honey'
-    },
-    {
-      amount: 1,
-      unit: 'pinch',
+      amount: null,
+      unit: '',
       item: 'salt'
+    },
+    {
+      amount: null,
+      unit: '',
+      item: 'parsley, chopped'
     }
   ],
   steps: [
-    'Warm the water or stock with the sriracha over low heat until steaming.',
-    'Whisk in cold butter a few cubes at a time, keeping the heat low so the sauce stays emulsified.',
-    'Finish with lime juice, maple syrup or honey, and salt. Taste and add more sriracha only after the sauce is glossy.'
+    'Start with hot butter emulsion sauce in the pan.',
+    'Add sriracha to taste and stir until the emulsion loosens it into a smooth sauce.',
+    'Add confit garlic or roasted garlic paste, a good pinch of salt, and fresh lemon juice.',
+    'Fold through chopped parsley at the end.',
+    'Serve immediately while the sauce is glossy and coating.'
   ]
 });
