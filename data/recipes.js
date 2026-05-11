@@ -10,7 +10,8 @@ window.RECIPE_FILES = [
   "berry-cake.js",
   "tofu-scramble.js",
   "butter-emulsion.js",
-  "sriracha-butter-emulsion.js"
+  "sriracha-butter-emulsion.js",
+  "vegan-rouladen.js"
 ];
 
 (function loadRecipeFiles() {
