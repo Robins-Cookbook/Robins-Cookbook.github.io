@@ -1,0 +1,200 @@
+const RECIPES = window.RECIPES || [];
+
+function formatAmount(value) {
+  if (value === null || value === undefined) return "";
+  const whole = Math.floor(value);
+  const fraction = Math.round((value - whole) * 100) / 100;
+  const fractions = {
+    0.25: "1/4",
+    0.33: "1/3",
+    0.5: "1/2",
+    0.67: "2/3",
+    0.75: "3/4"
+  };
+  if (fractions[fraction]) {
+    return whole > 0 ? `${whole} ${fractions[fraction]}` : fractions[fraction];
+  }
+  const rounded = Math.round(value * 100) / 100;
+  if (Number.isInteger(rounded)) return String(rounded);
+  return String(rounded).replace(/^0\./, ".");
+}
+
+function formatIngredient(ingredient, scale = 1) {
+  if (typeof ingredient === "string") return ingredient;
+  if (ingredient.amount === null || ingredient.amount === undefined) {
+    return [ingredient.unit, ingredient.item].filter(Boolean).join(" ");
+  }
+  return [formatAmount(ingredient.amount * scale), ingredient.unit, ingredient.item]
+    .filter(Boolean)
+    .join(" ");
+}
+
+function getRecipe() {
+  const id = document.body.dataset.recipeId;
+  return RECIPES.find((recipe) => recipe.id === id);
+}
+
+function getInitialTarget(recipe) {
+  if (!recipe.calculator) return recipe.baseServings || 1;
+  if (recipe.calculator.type === "pan") return recipe.calculator.basePan;
+  return recipe.baseServings || recipe.calculator.min || 1;
+}
+
+function getScale(recipe, target) {
+  if (!recipe.calculator) return 1;
+  if (recipe.calculator.type === "pan") {
+    return Math.pow(target / recipe.calculator.basePan, 2);
+  }
+  return target / recipe.baseServings;
+}
+
+function renderIngredientList(recipe, scale = 1) {
+  const list = document.getElementById("ingredientList");
+  if (!list) return;
+  list.innerHTML = recipe.ingredients
+    .map((ingredient) => `<li>${formatIngredient(ingredient, scale)}</li>`)
+    .join("");
+}
+
+function renderFeature(recipe) {
+  const panel = document.getElementById("recipeFeature");
+  if (!panel) return;
+
+  const blocks = [];
+
+  if (recipe.calculator) {
+    const target = getInitialTarget(recipe);
+    const unit = recipe.calculator.unit ? ` ${recipe.calculator.unit}` : "";
+    blocks.push(`
+      <section class="recipe-tool">
+        <span class="tool-kicker">Calculator</span>
+        <h2>${recipe.calculator.title}</h2>
+        <label class="range-control" for="recipeScale">
+          <span>${recipe.calculator.label}</span>
+          <strong id="scaleValue">${target}${unit}</strong>
+        </label>
+        <input
+          id="recipeScale"
+          type="range"
+          min="${recipe.calculator.min}"
+          max="${recipe.calculator.max}"
+          value="${target}"
+          step="${recipe.calculator.type === "pan" ? "1" : "1"}"
+        />
+        <p>${recipe.calculator.note}</p>
+      </section>
+    `);
+  }
+
+  if (recipe.feature) {
+    blocks.push(`
+      <section class="recipe-tool">
+        <span class="tool-kicker">${recipe.feature.type}</span>
+        <h2>${recipe.feature.title}</h2>
+        <p>${recipe.feature.text}</p>
+      </section>
+    `);
+  }
+
+  if (recipe.sourceVideo) {
+    blocks.push(`
+      <section class="recipe-tool source-tool">
+        <span class="tool-kicker">Source video</span>
+        <h2>${recipe.sourceVideo.label}</h2>
+        <a class="btn btn-secondary" href="${recipe.sourceVideo.url}" target="_blank" rel="noopener">Open video source</a>
+      </section>
+    `);
+  }
+
+  if (recipe.sourceLink) {
+    blocks.push(`
+      <section class="recipe-tool source-tool">
+        <span class="tool-kicker">Reference</span>
+        <h2>${recipe.sourceLink.label}</h2>
+        <a class="btn btn-secondary" href="${recipe.sourceLink.url}" target="_blank" rel="noopener">Open reference</a>
+      </section>
+    `);
+  }
+
+  panel.innerHTML = blocks.join("");
+
+  const slider = document.getElementById("recipeScale");
+  if (!slider) return;
+  const value = document.getElementById("scaleValue");
+  const unit = recipe.calculator.unit ? ` ${recipe.calculator.unit}` : "";
+
+  slider.addEventListener("input", () => {
+    const target = Number(slider.value);
+    value.textContent = `${target}${unit}`;
+    renderIngredientList(recipe, getScale(recipe, target));
+  });
+}
+
+function renderRecipePage() {
+  const recipe = getRecipe();
+  const page = document.getElementById("recipePage");
+  if (!page) return;
+
+  if (!recipe) {
+    page.innerHTML = `
+      <div class="section-inner recipe-not-found">
+        <h1>Recipe not found</h1>
+        <a class="btn btn-primary" href="../index.html">Back to recipes</a>
+      </div>
+    `;
+    return;
+  }
+
+  document.title = `${recipe.title} | Personal Recipes`;
+  const description = document.querySelector("meta[name='description']");
+  if (description) description.setAttribute("content", recipe.description);
+
+  page.innerHTML = `
+    <section class="recipe-hero-detail">
+      <div class="section-inner recipe-hero-grid">
+        <div>
+          <a class="back-link" href="../index.html">Back to recipes</a>
+          <div class="recipe-meta-row">
+            <span class="recipe-category">${recipe.category}</span>
+            <span class="recipe-time">${recipe.time} min</span>
+            <span class="recipe-season">${recipe.season}</span>
+            ${recipe.favorite ? '<span class="recipe-favorite">Favorite</span>' : ""}
+          </div>
+          <h1>${recipe.title}</h1>
+          <p>${recipe.description}</p>
+          <div class="recipe-tags">
+            ${recipe.tags.map((tag) => `<span>${tag}</span>`).join("")}
+          </div>
+        </div>
+        <img src="${recipe.image}" alt="${recipe.title}" />
+      </div>
+    </section>
+
+    <section class="section-inner recipe-detail-grid">
+      <article class="recipe-panel">
+        <h2>Ingredients</h2>
+        <ul id="ingredientList"></ul>
+      </article>
+      <article class="recipe-panel">
+        <h2>Method</h2>
+        <ol>
+          ${recipe.steps.map((step) => `<li>${step}</li>`).join("")}
+        </ol>
+      </article>
+      <aside class="recipe-feature-stack" id="recipeFeature"></aside>
+    </section>
+  `;
+
+  renderIngredientList(recipe);
+  renderFeature(recipe);
+}
+
+function initFooterYear() {
+  const year = document.getElementById("footerYear");
+  if (year) year.textContent = new Date().getFullYear();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initFooterYear();
+  renderRecipePage();
+});

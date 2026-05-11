@@ -86,29 +86,7 @@
     <p>© <span id="footerYear"></span> Personal Recipes.</p>
   </footer>
 
-  <div class="recipe-modal" id="recipeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
-    <div class="modal-backdrop" data-close-modal></div>
-    <article class="modal-card">
-      <button class="modal-close" type="button" aria-label="Close recipe" data-close-modal>×</button>
-      <img id="modalImage" alt="" />
-      <div class="modal-body">
-        <div class="modal-meta" id="modalMeta"></div>
-        <h2 id="modalTitle"></h2>
-        <p id="modalDescription"></p>
-        <div class="modal-columns">
-          <div>
-            <h3>Ingredients</h3>
-            <ul id="modalIngredients"></ul>
-          </div>
-          <div>
-            <h3>Method</h3>
-            <ol id="modalSteps"></ol>
-          </div>
-        </div>
-      </div>
-    </article>
-  </div>
-
+  <script src="data/recipes.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

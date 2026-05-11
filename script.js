@@ -1,109 +1,4 @@
-const RECIPES = [
-  {
-    id: "grain-bowls",
-    title: "Roasted Vegetable Grain Bowls",
-    category: "Mains",
-    time: 40,
-    season: "Spring",
-    favorite: true,
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80",
-    description: "A flexible bowl with lemon tahini, crisp chickpeas, and roasted vegetables.",
-    tags: ["bowls", "chickpeas", "tahini"],
-    ingredients: ["1 cup cooked grains", "2 cups seasonal vegetables", "1 can chickpeas", "2 tbsp tahini", "1 lemon", "1 garlic clove", "Olive oil, salt, pepper"],
-    steps: ["Roast the vegetables and chickpeas at 210C until browned.", "Whisk tahini, lemon juice, garlic, salt, and enough water to make a sauce.", "Serve over warm grains with herbs and extra lemon."]
-  },
-  {
-    id: "miso-noodles",
-    title: "Ginger Miso Noodles",
-    category: "Mains",
-    time: 25,
-    season: "Anytime",
-    favorite: true,
-    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
-    description: "Glossy noodles with sesame, ginger, tofu, and crunchy cucumber.",
-    tags: ["noodles", "tofu", "quick"],
-    ingredients: ["200g noodles", "200g firm tofu", "1 tbsp miso", "1 tbsp soy sauce", "1 tbsp sesame oil", "1 thumb ginger", "Cucumber and spring onions"],
-    steps: ["Cook noodles, then rinse briefly so they stay springy.", "Pan-fry tofu until golden on the edges.", "Stir miso, soy, sesame oil, grated ginger, and noodle water into a sauce, then toss everything together."]
-  },
-  {
-    id: "bean-chili",
-    title: "Smoky Bean Chili",
-    category: "Mains",
-    time: 45,
-    season: "Autumn",
-    favorite: false,
-    image: "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?auto=format&fit=crop&w=900&q=80",
-    description: "A dependable pot of beans, tomato, paprika, and dark chocolate.",
-    tags: ["beans", "one-pot", "freezer"],
-    ingredients: ["2 cans mixed beans", "1 onion", "2 garlic cloves", "1 tin tomatoes", "1 tsp smoked paprika", "1 tsp cumin", "1 square dark chocolate"],
-    steps: ["Cook onion and garlic until soft.", "Add spices, tomatoes, beans, and a splash of water.", "Simmer until thick, then finish with dark chocolate and lime."]
-  },
-  {
-    id: "green-soup",
-    title: "Pea, Mint, and Potato Soup",
-    category: "Soups",
-    time: 30,
-    season: "Spring",
-    favorite: false,
-    image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80",
-    description: "Bright, simple soup with enough potato to feel comforting.",
-    tags: ["soup", "peas", "mint"],
-    ingredients: ["500g peas", "2 potatoes", "1 onion", "750ml vegetable stock", "A handful of mint", "Lemon juice", "Olive oil"],
-    steps: ["Soften onion in olive oil.", "Add diced potatoes and stock, then simmer until tender.", "Add peas and mint, cook briefly, blend, and sharpen with lemon."]
-  },
-  {
-    id: "socca",
-    title: "Chickpea Socca with Herb Salad",
-    category: "Sides",
-    time: 35,
-    season: "Summer",
-    favorite: true,
-    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=80",
-    description: "Crisp-edged chickpea flatbread with a lemony herb salad.",
-    tags: ["chickpea flour", "gluten-free", "herbs"],
-    ingredients: ["1 cup chickpea flour", "1 cup water", "2 tbsp olive oil", "1/2 tsp salt", "Parsley", "Rocket", "Lemon"],
-    steps: ["Rest chickpea flour, water, oil, and salt for 20 minutes.", "Heat an oiled pan until very hot and bake or broil until crisp.", "Top with herbs, rocket, lemon, and black pepper."]
-  },
-  {
-    id: "overnight-oats",
-    title: "Apple Cinnamon Overnight Oats",
-    category: "Breakfast",
-    time: 10,
-    season: "Autumn",
-    favorite: false,
-    image: "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=900&q=80",
-    description: "Creamy oats with grated apple, toasted seeds, and cinnamon.",
-    tags: ["oats", "make-ahead", "breakfast"],
-    ingredients: ["1/2 cup oats", "1/2 cup oat milk", "1 grated apple", "1 tbsp chia seeds", "1/2 tsp cinnamon", "Pumpkin seeds", "Maple syrup"],
-    steps: ["Stir oats, oat milk, apple, chia, cinnamon, and maple syrup.", "Chill overnight.", "Top with toasted seeds in the morning."]
-  },
-  {
-    id: "berry-cake",
-    title: "Almond Berry Cake",
-    category: "Sweets",
-    time: 55,
-    season: "Summer",
-    favorite: true,
-    image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=80",
-    description: "A tender vegan cake with almond, berries, and a crisp sugar top.",
-    tags: ["cake", "berries", "almond"],
-    ingredients: ["180g flour", "70g ground almonds", "120g sugar", "1 tsp baking powder", "180ml oat milk", "80ml neutral oil", "150g berries"],
-    steps: ["Whisk dry ingredients in one bowl and wet ingredients in another.", "Fold together gently, then scatter berries over the batter.", "Bake at 180C until golden and a skewer comes out clean."]
-  },
-  {
-    id: "tofu-scramble",
-    title: "Turmeric Tofu Scramble",
-    category: "Breakfast",
-    time: 20,
-    season: "Anytime",
-    favorite: false,
-    image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=900&q=80",
-    description: "Soft tofu, turmeric, black salt, greens, and toast.",
-    tags: ["tofu", "brunch", "protein"],
-    ingredients: ["250g firm tofu", "1/2 tsp turmeric", "1 tbsp nutritional yeast", "A pinch of black salt", "Spinach", "Cherry tomatoes", "Toast"],
-    steps: ["Crumble tofu into a warm pan.", "Add turmeric, nutritional yeast, black salt, and a splash of water.", "Fold in spinach and tomatoes, then serve on toast."]
-  }
-];
+const RECIPES = window.RECIPES || [];
 
 const state = {
   category: "All",
@@ -113,6 +8,22 @@ const state = {
 
 const categories = ["All", "Breakfast", "Mains", "Soups", "Sides", "Sweets"];
 
+function recipeUrl(recipe) {
+  return `recipes/${recipe.id}.html`;
+}
+
+function formatAmount(value) {
+  if (value === null || value === undefined) return "";
+  if (Number.isInteger(value)) return String(value);
+  return String(value).replace(/^0\./, ".");
+}
+
+function ingredientText(ingredient) {
+  if (typeof ingredient === "string") return ingredient;
+  const amount = formatAmount(ingredient.amount);
+  return [amount, ingredient.unit, ingredient.item].filter(Boolean).join(" ");
+}
+
 function recipeMatches(recipe) {
   const haystack = [
     recipe.title,
@@ -120,7 +31,7 @@ function recipeMatches(recipe) {
     recipe.season,
     recipe.description,
     ...recipe.tags,
-    ...recipe.ingredients
+    ...recipe.ingredients.map(ingredientText)
   ].join(" ").toLowerCase();
 
   const matchesCategory = state.category === "All" || recipe.category === state.category;
@@ -160,9 +71,9 @@ function renderFilters() {
 }
 
 function buildRecipeCard(recipe) {
-  const card = document.createElement("button");
-  card.type = "button";
+  const card = document.createElement("a");
   card.className = "recipe-card reveal";
+  card.href = recipeUrl(recipe);
   card.setAttribute("aria-label", `Open recipe for ${recipe.title}`);
   card.innerHTML = `
     <img src="${recipe.image}" alt="${recipe.title}" loading="lazy" />
@@ -179,7 +90,6 @@ function buildRecipeCard(recipe) {
       </div>
     </div>
   `;
-  card.addEventListener("click", () => openRecipe(recipe));
   return card;
 }
 
@@ -202,40 +112,6 @@ function renderRecipes() {
   initReveal();
 }
 
-function openRecipe(recipe) {
-  const modal = document.getElementById("recipeModal");
-  const modalImage = document.getElementById("modalImage");
-  const modalMeta = document.getElementById("modalMeta");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalDescription = document.getElementById("modalDescription");
-  const modalIngredients = document.getElementById("modalIngredients");
-  const modalSteps = document.getElementById("modalSteps");
-
-  modalImage.src = recipe.image;
-  modalImage.alt = recipe.title;
-  modalMeta.innerHTML = `
-    <span class="recipe-category">${recipe.category}</span>
-    <span class="recipe-time">${recipe.time} min</span>
-    <span class="recipe-season">${recipe.season}</span>
-    ${recipe.favorite ? '<span class="recipe-favorite">Favorite</span>' : ""}
-  `;
-  modalTitle.textContent = recipe.title;
-  modalDescription.textContent = recipe.description;
-  modalIngredients.innerHTML = recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
-  modalSteps.innerHTML = recipe.steps.map((item) => `<li>${item}</li>`).join("");
-
-  modal.hidden = false;
-  document.body.classList.add("modal-open");
-  modal.querySelector(".modal-close").focus();
-}
-
-function closeRecipe() {
-  const modal = document.getElementById("recipeModal");
-  if (!modal || modal.hidden) return;
-  modal.hidden = true;
-  document.body.classList.remove("modal-open");
-}
-
 function initSearchAndSort() {
   const search = document.getElementById("recipeSearch");
   const sort = document.getElementById("recipeSort");
@@ -255,19 +131,8 @@ function initSearchAndSort() {
   }
 }
 
-function initModal() {
-  document.addEventListener("click", (event) => {
-    if (event.target.closest("[data-close-modal]")) closeRecipe();
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeRecipe();
-  });
-}
-
-function initNav() {
+function initHeader() {
   const header = document.getElementById("site-header");
-
   const setScrolled = () => {
     if (header) header.classList.toggle("scrolled", window.scrollY > 8);
   };
@@ -303,9 +168,8 @@ function initFooterYear() {
 
 document.addEventListener("DOMContentLoaded", () => {
   initFooterYear();
-  initNav();
+  initHeader();
   initSearchAndSort();
-  initModal();
   renderFilters();
   renderRecipes();
 });
