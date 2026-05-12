@@ -6,7 +6,7 @@ const state = {
   sort: "favorite"
 };
 
-const categories = ["All", "Breakfast", "Mains", "Soups", "Sides", "Sauces", "Sweets"];
+const categories = ["All", ...new Set(RECIPES.map((recipe) => recipe.category))];
 
 function getDisplayRecipe(recipe) {
   return typeof localizeRecipe === "function" ? localizeRecipe(recipe) : recipe;

@@ -1,18 +1,9 @@
 window.RECIPES = window.RECIPES || [];
 
 window.RECIPE_FILES = [
-  "grain-bowls.js",
-  "miso-noodles.js",
-  "bean-chili.js",
-  "green-soup.js",
-  "socca.js",
-  "overnight-oats.js",
-  "berry-cake.js",
-  "tofu-scramble.js",
   "butter-emulsion.js",
   "sriracha-butter-emulsion.js",
-  "vegan-rouladen.js",
-  "orange-cream-pasta.js"
+  "vegan-rouladen.js"
 ];
 
 (function loadRecipeFiles() {

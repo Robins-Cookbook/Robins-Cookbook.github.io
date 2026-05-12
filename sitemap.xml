@@ -6,46 +6,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://robins-cookbook.github.io/recipes/grain-bowls.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://robins-cookbook.github.io/recipes/miso-noodles.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://robins-cookbook.github.io/recipes/bean-chili.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://robins-cookbook.github.io/recipes/green-soup.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://robins-cookbook.github.io/recipes/socca.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://robins-cookbook.github.io/recipes/overnight-oats.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://robins-cookbook.github.io/recipes/berry-cake.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://robins-cookbook.github.io/recipes/tofu-scramble.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://robins-cookbook.github.io/recipes/butter-emulsion.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -57,11 +17,6 @@
   </url>
   <url>
     <loc>https://robins-cookbook.github.io/recipes/vegan-rouladen.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://robins-cookbook.github.io/recipes/orange-cream-pasta.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
