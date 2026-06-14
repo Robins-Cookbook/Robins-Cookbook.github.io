@@ -128,6 +128,47 @@ function renderIngredientList(recipe, scale = 1, ratioState = null) {
     .join("");
 }
 
+function parseMacroValue(value) {
+  const match = String(value).match(/^([\d.]+)\s*(.*)$/);
+  if (!match) return null;
+  return {
+    amount: Number(match[1]),
+    unit: match[2]
+  };
+}
+
+function formatMacroValue(value, scale) {
+  const macro = parseMacroValue(value);
+  if (!macro || Number.isNaN(macro.amount)) return value;
+
+  const scaled = macro.amount * scale;
+  const rounded = macro.unit === "kcal"
+    ? Math.round(scaled)
+    : Math.round(scaled * 10) / 10;
+  const formatted = Number.isInteger(rounded) ? String(rounded) : String(rounded);
+  const localized = typeof getLanguage === "function" && getLanguage() === "de"
+    ? formatted.replace(".", ",")
+    : formatted;
+
+  return [localized, macro.unit].filter(Boolean).join(" ");
+}
+
+function updateMacroTable(recipe, target) {
+  if (!recipe.macros?.perYield) return;
+
+  const basis = document.getElementById("macroBasis");
+  if (basis) {
+    const unit = recipe.calculator?.unit ? ` ${recipe.calculator.unit}` : "";
+    basis.textContent = `${t("macrosFor")} ${target}${unit}`;
+  }
+
+  const scale = target / recipe.macros.perYield;
+  document.querySelectorAll("[data-macro-key]").forEach((cell) => {
+    const key = cell.dataset.macroKey;
+    cell.textContent = formatMacroValue(recipe.macros[key], scale);
+  });
+}
+
 function getRelatedLinks(recipe) {
   return (recipe.relatedRecipes || [])
     .map((related) => {
@@ -196,6 +237,36 @@ function renderCalculator(recipe) {
 
   const blocks = [];
 
+  if (recipe.macros) {
+    blocks.push(`
+      <section class="recipe-tool">
+        <span class="tool-kicker">${t("macros")}</span>
+        <h2 id="macroBasis">${recipe.macros.basis}</h2>
+        <table class="macro-table">
+          <tbody id="macroRows">
+            <tr>
+              <th>${t("calories")}</th>
+              <td data-macro-key="calories">${recipe.macros.calories}</td>
+            </tr>
+            <tr>
+              <th>${t("protein")}</th>
+              <td data-macro-key="protein">${recipe.macros.protein}</td>
+            </tr>
+            <tr>
+              <th>${t("carbs")}</th>
+              <td data-macro-key="carbs">${recipe.macros.carbs}</td>
+            </tr>
+            <tr>
+              <th>${t("fat")}</th>
+              <td data-macro-key="fat">${recipe.macros.fat}</td>
+            </tr>
+          </tbody>
+        </table>
+        ${recipe.macros.note ? `<p>${recipe.macros.note}</p>` : ""}
+      </section>
+    `);
+  }
+
   if (recipe.calculator) {
     const target = getInitialTarget(recipe);
     const unit = recipe.calculator.unit ? ` ${recipe.calculator.unit}` : "";
@@ -224,6 +295,7 @@ function renderCalculator(recipe) {
 
   panel.innerHTML = blocks.join("");
   panel.hidden = !blocks.length;
+  updateMacroTable(recipe, getInitialTarget(recipe));
 
   const slider = document.getElementById("recipeScale");
   if (!slider) return;
@@ -238,6 +310,7 @@ function renderCalculator(recipe) {
     } else if (recipe.calculator.type === "yieldRatio") {
       value.textContent = `${target}${unit}`;
       renderIngredientList(recipe, 1, getCalculatorIngredientState(recipe, target));
+      updateMacroTable(recipe, target);
     } else {
       value.textContent = `${target}${unit}`;
       renderIngredientList(recipe, getScale(recipe, target));

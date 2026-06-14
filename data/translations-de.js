@@ -22,6 +22,10 @@ window.RECIPE_TRANSLATIONS.de = {
       title: '5:2-Butteremulsion',
       text: 'Das Verhältnis bleibt 5 Teile Butter zu 2 Teilen Wasser. Wasser mit drei Vierteln der Butter erhitzen, dann die restliche kalte Butter einmixen, um die Emulsion zu stabilisieren.'
     },
+    macros: {
+      basis: 'pro 100 ml Sauce',
+      note: 'Aus dem 5:2-Verhältnis von Butter zu Wasser berechnet; Salz ist nicht einbezogen.'
+    },
     ingredients: [
       { amount: 28.5, unit: 'ml', item: 'Wasser', role: 'yieldWater' },
       { amount: 71.5, unit: 'g', item: 'Butter, gewürfelt, gesamt', role: 'yieldButterTotal' },
@@ -52,6 +56,10 @@ window.RECIPE_TRANSLATIONS.de = {
       title: 'Sriracha-Muschelsauce',
       text: 'Im Video entsteht diese Sauce in der Muschelpfanne: Weißwein öffnet die Muscheln, dann verbinden sich Butteremulsion und Sriracha zu einer glänzenden Sauce.'
     },
+    macros: {
+      basis: 'pro 100 g Sauce',
+      note: 'Grobe Schätzung für eine Sauce, die hauptsächlich aus Butteremulsion plus Sriracha, Knoblauch, Zitrone und Kräutern besteht.'
+    },
     ingredients: [
       { amount: null, unit: '', item: 'Butteremulsionssauce' },
       { amount: null, unit: '', item: 'Sriracha, nach Geschmack' },
@@ -79,6 +87,10 @@ window.RECIPE_TRANSLATIONS.de = {
       type: 'Texturhinweis',
       title: 'Abkühlen für mehr Biss',
       text: 'Im Video wird empfohlen, die gebackenen Rouladen abkühlen zu lassen und danach in der Soße zu köcheln, damit die Textur besonders fleischig wird.'
+    },
+    macros: {
+      basis: 'pro Portion',
+      note: 'Grobe Schätzung für 1 Roulade mit Soße; Ölaufnahme und finale Soßenmenge können die Werte verändern.'
     },
     ingredients: [
       { amount: 200, unit: 'g', item: 'geräucherter Tofu' },
@@ -133,6 +145,10 @@ window.RECIPE_TRANSLATIONS.de = {
       type: 'Nährwerte',
       title: 'Makros aus der Caption',
       text: 'Das Reel nennt pro 100 g ungefähr 150 kcal, 2 g Fett, 19 g Kohlenhydrate und 12 g Eiweiß. Die Werte variieren je nach verwendeten Produkten.'
+    },
+    macros: {
+      basis: 'pro 100 g',
+      note: 'Aus der Instagram-Reel-Caption; Werte variieren je nach verwendeten Produkten.'
     },
     ingredients: [
       { amount: 150, unit: 'g', item: 'Dinkelmehl' },

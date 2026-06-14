@@ -25,6 +25,14 @@ window.RECIPES.push({
     title: 'Cool for a meatier bite',
     text: 'The video recommends cooling the baked rouladen before simmering them in the gravy for an especially firm, meaty texture.'
   },
+  macros: {
+    basis: 'per serving',
+    calories: '420 kcal',
+    protein: '32 g',
+    carbs: '42 g',
+    fat: '12 g',
+    note: 'Best-effort estimate for 1 roulade with gravy; oil absorption and final sauce yield can change it.'
+  },
   ingredients: [
     {
       amount: 200,

@@ -45,6 +45,15 @@ window.RECIPES.push({
     title: '5:2 butter emulsion',
     text: 'Keep the total ratio at 5 parts butter to 2 parts water. Heat the water with three quarters of the butter first, then blend in the remaining cold butter to stabilize the emulsion.'
   },
+  macros: {
+    basis: 'per 100 ml sauce',
+    calories: '515 kcal',
+    protein: '1 g',
+    carbs: '0 g',
+    fat: '58 g',
+    perYield: 100,
+    note: 'Calculated from the 5:2 butter-water ratio; salt is not included.'
+  },
   ingredients: [
     {
       amount: 28.5,

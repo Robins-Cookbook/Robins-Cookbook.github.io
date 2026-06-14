@@ -558,6 +558,38 @@ footer {
   font-size: .92rem;
 }
 
+.macro-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+  font-size: .92rem;
+}
+
+.macro-table tr {
+  border-bottom: 1px solid rgba(122,148,108,.18);
+}
+
+.macro-table tr:last-child {
+  border-bottom: 0;
+}
+
+.macro-table th,
+.macro-table td {
+  padding: 8px 0;
+  text-align: left;
+}
+
+.macro-table th {
+  color: var(--color-text-muted);
+  font-weight: 700;
+}
+
+.macro-table td {
+  color: var(--color-text);
+  font-weight: 800;
+  text-align: right;
+}
+
 .range-control {
   display: flex;
   align-items: center;

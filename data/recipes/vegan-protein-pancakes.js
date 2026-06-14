@@ -25,6 +25,14 @@ window.RECIPES.push({
     title: 'Caption macros',
     text: 'The reel lists approximate nutrition per 100 g as 150 kcal, 2 g fat, 19 g carbohydrates, and 12 g protein. Values vary by product.'
   },
+  macros: {
+    basis: 'per 100 g',
+    calories: '150 kcal',
+    protein: '12 g',
+    carbs: '19 g',
+    fat: '2 g',
+    note: 'From the Instagram reel caption; values vary by product.'
+  },
   ingredients: [
     {
       amount: 150,
