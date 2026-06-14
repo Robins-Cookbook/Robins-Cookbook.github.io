@@ -121,5 +121,36 @@ window.RECIPE_TRANSLATIONS.de = {
       'Mit Salz, Pfeffer, Rotwein, Gurkensud und optional pflanzlicher Sahne abschmecken.',
       'Die gebackenen Rouladen in die Soße geben und 20 Minuten köcheln lassen, nach 10 Minuten wenden.'
     ]
+  },
+  'vegan-protein-pancakes': {
+    title: 'Vegane High-Protein-Pancakes',
+    description: 'Schnelle vegane Pancakes mit Dinkelmehl, Weizengluten, Proteinpulver, Sojamilch und Mineralwasser für ein proteinreiches Frühstück.',
+    tags: ['Pancakes', 'Protein', 'Frühstück'],
+    sourceVideo: {
+      label: 'Instagram-Reel von vegan_high_protein'
+    },
+    feature: {
+      type: 'Nährwerte',
+      title: 'Makros aus der Caption',
+      text: 'Das Reel nennt pro 100 g ungefähr 150 kcal, 2 g Fett, 19 g Kohlenhydrate und 12 g Eiweiß. Die Werte variieren je nach verwendeten Produkten.'
+    },
+    ingredients: [
+      { amount: 150, unit: 'g', item: 'Dinkelmehl' },
+      { amount: 25, unit: 'g', item: 'Weizengluten' },
+      { amount: 25, unit: 'g', item: 'veganes Proteinpulver' },
+      { amount: 15, unit: 'g', item: 'brauner Zucker oder Süße deiner Wahl' },
+      { amount: 15, unit: 'g', item: 'Backpulver' },
+      { amount: 1, unit: 'Prise', item: 'Salz' },
+      { amount: 150, unit: 'g', item: 'vegane Skyr-Alternative' },
+      { amount: 250, unit: 'ml', item: 'Sojamilch' },
+      { amount: 50, unit: 'ml', item: 'Mineralwasser' }
+    ],
+    steps: [
+      'Alle Zutaten bis auf das Mineralwasser in einer Schüssel vermischen, bis ein klumpenfreier Teig entsteht.',
+      'Dann das Mineralwasser vorsichtig einrühren.',
+      'Eine beschichtete Pfanne bei mittlerer Hitze erwärmen.',
+      'Die Pancakes portionsweise von beiden Seiten goldbraun ausbacken.',
+      'Warm mit deinen liebsten Toppings genießen.'
+    ]
   }
 };

@@ -3,7 +3,8 @@ window.RECIPES = window.RECIPES || [];
 window.RECIPE_FILES = [
   "butter-emulsion.js",
   "sriracha-butter-emulsion.js",
-  "vegan-rouladen.js"
+  "vegan-rouladen.js",
+  "vegan-protein-pancakes.js"
 ];
 
 (function loadRecipeFiles() {
