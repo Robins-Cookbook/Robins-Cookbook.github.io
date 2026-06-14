@@ -2,11 +2,13 @@ const RECIPES = window.RECIPES || [];
 
 const state = {
   category: "All",
+  style: "All",
   query: "",
   sort: "favorite"
 };
 
 const categories = ["All", ...new Set(RECIPES.map((recipe) => recipe.category))];
+const styles = ["All", ...new Set(RECIPES.map((recipe) => recipe.style).filter(Boolean))];
 
 function getDisplayRecipe(recipe) {
   return typeof localizeRecipe === "function" ? localizeRecipe(recipe) : recipe;
@@ -36,6 +38,7 @@ function recipeMatches(recipe) {
   const haystack = [
     displayRecipe.title,
     displayRecipe.categoryLabel || displayRecipe.category,
+    displayRecipe.styleLabel || displayRecipe.style,
     displayRecipe.seasonLabel || displayRecipe.season,
     displayRecipe.description,
     ...displayRecipe.tags,
@@ -43,8 +46,9 @@ function recipeMatches(recipe) {
   ].join(" ").toLowerCase();
 
   const matchesCategory = state.category === "All" || recipe.category === state.category;
+  const matchesStyle = state.style === "All" || recipe.style === state.style;
   const matchesQuery = !state.query || haystack.includes(state.query.toLowerCase());
-  return matchesCategory && matchesQuery;
+  return matchesCategory && matchesStyle && matchesQuery;
 }
 
 function getVisibleRecipes() {
@@ -60,24 +64,45 @@ function getVisibleRecipes() {
     });
 }
 
-function renderFilters() {
-  const wrap = document.getElementById("categoryFilters");
+function renderFilterButtons(wrap, options, activeValue, labelForOption, onChange) {
   if (!wrap) return;
 
   wrap.innerHTML = "";
-  categories.forEach((category) => {
+  options.forEach((option) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.className = `filter-btn${category === state.category ? " active" : ""}`;
-    button.textContent = category === "All" ? t("categories.All") : t(`categories.${category}`);
-    button.setAttribute("aria-pressed", String(category === state.category));
+    button.className = `filter-btn${option === activeValue ? " active" : ""}`;
+    button.textContent = labelForOption(option);
+    button.setAttribute("aria-pressed", String(option === activeValue));
     button.addEventListener("click", () => {
-      state.category = category;
+      onChange(option);
       renderFilters();
       renderRecipes();
     });
     wrap.appendChild(button);
   });
+}
+
+function renderFilters() {
+  renderFilterButtons(
+    document.getElementById("categoryFilters"),
+    categories,
+    state.category,
+    (category) => category === "All" ? t("categories.All") : t(`categories.${category}`),
+    (category) => {
+      state.category = category;
+    }
+  );
+
+  renderFilterButtons(
+    document.getElementById("styleFilters"),
+    styles,
+    state.style,
+    (style) => style === "All" ? t("styles.All") : t(`styles.${style}`),
+    (style) => {
+      state.style = style;
+    }
+  );
 }
 
 function buildRecipeCard(recipe) {
@@ -94,6 +119,7 @@ function buildRecipeCard(recipe) {
     <div class="recipe-card-body">
       <div class="recipe-meta-row">
         <span class="recipe-category">${displayRecipe.categoryLabel}</span>
+        ${displayRecipe.styleLabel ? `<span class="recipe-style">${displayRecipe.styleLabel}</span>` : ""}
         <span class="recipe-time">${displayRecipe.time} min</span>
         ${displayRecipe.favorite ? `<span class="recipe-favorite">${t("favorite")}</span>` : ""}
       </div>
@@ -155,7 +181,10 @@ function setHomePageText() {
   document.getElementById("recipeSort")?.setAttribute("aria-label", t("sortRecipes"));
   document.querySelector("#recipeSort option[value='favorite']").textContent = t("favoritesFirst");
   document.querySelector("#recipeSort option[value='time']").textContent = t("fastestFirst");
-  document.getElementById("categoryFilters")?.setAttribute("aria-label", t("filterRecipes"));
+  document.getElementById("categoryFilters")?.setAttribute("aria-label", t("filterByType"));
+  document.getElementById("styleFilters")?.setAttribute("aria-label", t("filterByStyle"));
+  document.querySelector("[data-filter-label='type']").textContent = t("typeFilter");
+  document.querySelector("[data-filter-label='style']").textContent = t("styleFilter");
   setCommonPageText();
 }
 

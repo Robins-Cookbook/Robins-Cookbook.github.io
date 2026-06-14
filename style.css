@@ -259,11 +259,32 @@ button, input, select { font: inherit; }
   font-weight: 600;
 }
 
+.filter-groups {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.filter-group {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.filter-label {
+  color: var(--color-text-muted);
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  line-height: 2.55;
+  text-transform: uppercase;
+}
+
 .filter-bar {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 24px;
 }
 
 .filter-btn {
@@ -365,6 +386,7 @@ button, input, select { font: inherit; }
 }
 
 .recipe-category,
+.recipe-style,
 .recipe-time,
 .recipe-season,
 .recipe-favorite {
@@ -379,6 +401,7 @@ button, input, select { font: inherit; }
 }
 
 .recipe-category { color: #24553d; background: #dff5e7; border: 1px solid #b4e3c5; }
+.recipe-style { color: #473367; background: #eadff5; border: 1px solid #d1b8e7; }
 .recipe-time { color: #5b4a1f; background: #f6edd6; border: 1px solid #ead7a5; }
 .recipe-season { color: #583148; background: #f4dde6; border: 1px solid #e6bdce; }
 .recipe-favorite { color: #71490f; background: #f8e7be; border: 1px solid #e5c36e; }
@@ -707,8 +730,13 @@ footer {
     width: min(210px, calc(100vw - 132px));
   }
 
-  .filter-bar {
-    flex-wrap: wrap;
+  .filter-group {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .filter-label {
+    line-height: 1.2;
   }
 
   .filter-btn {

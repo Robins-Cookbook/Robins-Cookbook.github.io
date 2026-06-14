@@ -13,6 +13,10 @@ const UI_TRANSLATIONS = {
     favoritesFirst: "Favorites first",
     fastestFirst: "Fastest first",
     filterRecipes: "Filter recipes by category",
+    filterByType: "Filter recipes by type",
+    filterByStyle: "Filter recipes by style",
+    typeFilter: "Type",
+    styleFilter: "Style",
     noMatches: "No matching recipes yet.",
     openRecipe: "Open recipe for",
     favorite: "Favorite",
@@ -42,6 +46,11 @@ const UI_TRANSLATIONS = {
       Sauces: "Sauces",
       Sweets: "Sweets"
     },
+    styles: {
+      All: "All",
+      Casual: "Casual",
+      Fancy: "Fancy"
+    },
     seasons: {
       Anytime: "Anytime",
       Spring: "Spring",
@@ -61,6 +70,10 @@ const UI_TRANSLATIONS = {
     favoritesFirst: "Favoriten zuerst",
     fastestFirst: "Schnellste zuerst",
     filterRecipes: "Rezepte nach Kategorie filtern",
+    filterByType: "Rezepte nach Typ filtern",
+    filterByStyle: "Rezepte nach Stil filtern",
+    typeFilter: "Typ",
+    styleFilter: "Stil",
     noMatches: "Noch keine passenden Rezepte.",
     openRecipe: "Rezept öffnen:",
     favorite: "Favorit",
@@ -89,6 +102,11 @@ const UI_TRANSLATIONS = {
       Sides: "Beilagen",
       Sauces: "Saucen",
       Sweets: "Süßes"
+    },
+    styles: {
+      All: "Alle",
+      Casual: "Casual",
+      Fancy: "Fancy"
     },
     seasons: {
       Anytime: "Jederzeit",
@@ -134,6 +152,7 @@ function localizeRecipe(recipe) {
   const translation = window.RECIPE_TRANSLATIONS?.[language]?.[recipe.id];
   const localized = deepMerge(recipe, translation);
   localized.categoryLabel = localized.categoryLabel || t(`categories.${recipe.category}`);
+  localized.styleLabel = localized.styleLabel || t(`styles.${recipe.style}`);
   localized.seasonLabel = localized.seasonLabel || t(`seasons.${recipe.season}`);
   return localized;
 }

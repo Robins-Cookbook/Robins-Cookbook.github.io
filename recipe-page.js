@@ -348,6 +348,7 @@ function renderRecipePage() {
           <a class="back-link" href="../index.html">${t("backToRecipes")}</a>
           <div class="recipe-meta-row">
             <span class="recipe-category">${displayRecipe.categoryLabel}</span>
+            ${displayRecipe.styleLabel ? `<span class="recipe-style">${displayRecipe.styleLabel}</span>` : ""}
             <span class="recipe-time">${displayRecipe.time} min</span>
             <span class="recipe-season">${displayRecipe.seasonLabel}</span>
             ${displayRecipe.favorite ? `<span class="recipe-favorite">${t("favorite")}</span>` : ""}

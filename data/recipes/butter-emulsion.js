@@ -4,6 +4,7 @@ window.RECIPES.push({
   id: 'butter-emulsion',
   title: 'Butter Emulsion Sauce',
   category: 'Sauces',
+  style: 'Fancy',
   time: 10,
   season: 'Anytime',
   favorite: true,

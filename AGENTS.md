@@ -9,7 +9,7 @@ This is Robin's personal recipe site, published with GitHub Pages at `https://ro
 - `data/recipes/*.js` are the source of truth for recipe content. Each file pushes exactly one recipe object into `window.RECIPES`.
 - `data/translations-de.js` contains German recipe translations keyed by recipe id. Keep English recipe files canonical and put German display text here.
 - `i18n.js` contains shared UI translations, the `Robin's Recipes` site name, local storage language state, and the language toggle.
-- `script.js` renders the homepage search, category filters, sorting, and recipe cards.
+- `script.js` renders the homepage search, type/style filters, sorting, and recipe cards.
 - `recipes/*.html` are small dedicated recipe page shells. Each one sets `data-recipe-id` on the `<body>`.
 - `recipe-page.js` renders a recipe detail page from the matching recipe object.
 - `style.css` contains all layout and visual styling.
@@ -42,6 +42,7 @@ window.RECIPES.push({
 4. Include the standard fields:
    - `title`
    - `category`
+   - `style` (`Casual` for everyday/daily recipes, `Fancy` for more elevated dishes or techniques)
    - `time`
    - `season`
    - `favorite`

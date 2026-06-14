@@ -4,6 +4,7 @@ window.RECIPES.push({
   id: 'vegan-rouladen',
   title: 'Vegan Rouladen with Gravy',
   category: 'Mains',
+  style: 'Fancy',
   time: 120,
   season: 'Winter',
   favorite: false,

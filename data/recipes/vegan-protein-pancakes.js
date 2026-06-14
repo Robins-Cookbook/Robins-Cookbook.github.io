@@ -4,6 +4,7 @@ window.RECIPES.push({
   id: 'vegan-protein-pancakes',
   title: 'Vegan High-Protein Pancakes',
   category: 'Breakfast',
+  style: 'Casual',
   time: 20,
   season: 'Anytime',
   favorite: false,

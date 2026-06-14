@@ -4,6 +4,7 @@ window.RECIPES.push({
   id: 'sriracha-butter-emulsion',
   title: 'Sriracha Butter Emulsion Sauce',
   category: 'Sauces',
+  style: 'Fancy',
   time: 12,
   season: 'Anytime',
   favorite: true,

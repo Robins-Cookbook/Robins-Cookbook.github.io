@@ -75,7 +75,16 @@
           </label>
         </div>
 
-        <div class="filter-bar" id="categoryFilters" aria-label="Filter recipes by category"></div>
+        <div class="filter-groups">
+          <div class="filter-group">
+            <span class="filter-label" data-filter-label="type">Type</span>
+            <div class="filter-bar" id="categoryFilters" aria-label="Filter recipes by category"></div>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label" data-filter-label="style">Style</span>
+            <div class="filter-bar" id="styleFilters" aria-label="Filter recipes by style"></div>
+          </div>
+        </div>
         <div class="recipe-grid" id="recipeGrid"></div>
       </div>
     </section>
